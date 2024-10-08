@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infinite_wallpapers/model/ApiCall/clustured_api.dart';
 import 'package:infinite_wallpapers/presentations/screens/tabBar/bottom_navigation.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
   Future<void>redirect() async{
+
   await  Future.delayed(Duration(seconds: 5),(){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNaviagtion()));
     });
