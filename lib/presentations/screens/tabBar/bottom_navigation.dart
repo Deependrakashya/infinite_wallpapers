@@ -30,26 +30,26 @@ class _HomePageState extends State<BottomNaviagtion> {
         body: screens[selectedIndex],
         // Bottom navigation bar 
         bottomNavigationBar: Container(
-          padding: EdgeInsets.only(left: 39, right: 39),
+          padding: const EdgeInsets.only(left: 39, right: 39),
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(blurRadius: 30, color: Colors.black.withOpacity(0.1))
           ]),
           child: SafeArea(
               child: Padding(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: GNav(
-                duration: Duration(milliseconds: 1000),
-                tabBackgroundColor: const Color.fromARGB(255, 213, 177, 221)!,
+                duration: const Duration(milliseconds: 1000),
+                tabBackgroundColor: const Color.fromARGB(255, 213, 177, 221),
                 activeColor: const Color.fromARGB(255, 0, 4, 12),
                 color: Colors.black,
                 tabActiveBorder: Border.all(
                   color: Colors.black,
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 onTabChange: (value) => setIndex(value),
                 rippleColor: const Color.fromARGB(255, 5, 5, 5),
                 gap: 10,
-                tabs: [
+                tabs: const [
                   GButton(
                     icon: Icons.home_outlined,
                     text: 'home',

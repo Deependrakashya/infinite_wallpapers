@@ -4,7 +4,7 @@ import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 Widget image(AsyncSnapshot<ClusturedPhotos> snapshot,int index){
   return Container(
                               height: 200,
-                              margin: EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
                               child: Image.network(snapshot
                                   .data!.photos![index].src!.medium
                                   .toString(),fit: BoxFit.cover,),

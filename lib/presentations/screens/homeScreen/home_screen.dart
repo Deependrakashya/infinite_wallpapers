@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_wallpapers/model/ApiCall/clustured_api.dart';
+import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 import 'package:infinite_wallpapers/presentations/views/image.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,12 +8,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ClusturedPhotosApiCall();
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
+            const SliverAppBar(
               title: Text('infinite_wallpapers'),
               expandedHeight: 100.0,
             ),
@@ -22,22 +22,27 @@ class HomeScreen extends StatelessWidget {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Container(
-                          child: Text(' loading data '),
+                          child: const Text(' loading data '),
                         );
                       } else if (snapshot.connectionState ==
                               ConnectionState.done &&
                           snapshot.hasData) {
-                        return Expanded(
-                          child: ListView.builder(
+                        return ListView.builder(
                             shrinkWrap: true,
-                              itemCount: snapshot.data!.photos!.length,
-                              itemBuilder: (context, index) {
-                                return image(snapshot, index);
-                              }),
-                        );
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data!.photos!.length,
+                            itemBuilder: (context, index) {
+                              return Column(children: [
+                                ListTile(
+                                  title: Text(snapshot.data!.photos![index].photographer.toString()),
+                                ),
+                                image(snapshot, index)
+                              ]);
+                              
+                            });
                       } else {
                         return Container(
-                          child: Text(' loading data '),
+                          child: const Text(' loading data '),
                         );
                       }
                     }))

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:infinite_wallpapers/presentations/screens/homeScreen/home_screen.dart';
 import 'package:infinite_wallpapers/presentations/screens/splashScreen/splash_screen.dart';
-import 'package:infinite_wallpapers/presentations/screens/tabBar/bottom_navigation.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +18,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
