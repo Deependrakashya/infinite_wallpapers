@@ -19,17 +19,16 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: const Center(
+      body:  Center(
           child: Text('SplashScreen Screen'),
         ),
-      ),
+  
     );
   }
   Future<void>redirect() async{
 
   await  Future.delayed(const Duration(seconds: 5),(){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNaviagtion()));
     });
   }
 }
