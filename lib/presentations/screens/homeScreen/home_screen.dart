@@ -4,29 +4,29 @@ import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 import 'package:infinite_wallpapers/presentations/views/categaries.dart';
 import 'package:infinite_wallpapers/presentations/views/image.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+    bool searchTap = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      
       body: SafeArea(
-        
         child: CustomScrollView(
           slivers: [
-             SliverAppBar(
-              title: Text('infinite_wallpapers'),
-              expandedHeight: 60.0,
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-    
-
-            ),
+MySliverAppBar(context, searchTap, (bool newSearchTap){
+setState(() {
+  searchTap = newSearchTap;
+});
+}),
             SliverToBoxAdapter(
-              
                 child: Column(
-                  
               children: [
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -55,7 +55,8 @@ class HomeScreen extends StatelessWidget {
                   child: FutureBuilder(
                       future: ClusturedPhotosApiCall(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Container(
                             child: const Text(' loading data '),
                           );
@@ -67,24 +68,23 @@ class HomeScreen extends StatelessWidget {
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 10,
-                                childAspectRatio: 0.5,
+                                      childAspectRatio: 0.5,
                                       mainAxisSpacing: 10),
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: snapshot.data!.photos!.length,
                               itemBuilder: (context, index) {
                                 return Container(
-                                  padding: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [BoxShadow(
-                                      color: Colors.red, 
-                                      blurRadius: 5,
-                                      offset: Offset(2, 0)
-                                      // spreadRadius: 30
-                                    )],
-                                    borderRadius: BorderRadius.circular(40)
-                                  ),
-                                  child: image(snapshot, index, context));
+                                    padding: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(boxShadow: [
+                                      BoxShadow(
+                                          color: const Color.fromARGB(
+                                              255, 53, 7, 76),
+                                          blurRadius: 5,
+                                          offset: Offset(0, 0),
+                                          spreadRadius: 1)
+                                    ], borderRadius: BorderRadius.circular(20)),
+                                    child: image(snapshot, index, context));
                               });
                         } else {
                           return Container(
