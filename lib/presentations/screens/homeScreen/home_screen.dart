@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:infinite_wallpapers/const.dart';
 import 'package:infinite_wallpapers/model/ApiCall/clustured_api.dart';
 import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 import 'package:infinite_wallpapers/presentations/views/categaries.dart';
+
 import 'package:infinite_wallpapers/presentations/views/image.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,19 +14,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-    bool searchTap = false;
+  bool searchTap = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-MySliverAppBar(context, searchTap, (bool newSearchTap){
-setState(() {
-  searchTap = newSearchTap;
-});
-}),
+            MySliverAppBar(context, searchTap, (bool newSearchTap) {
+              setState(() {
+                searchTap = newSearchTap;
+              });
+            }),
             SliverToBoxAdapter(
                 child: Column(
               children: [
@@ -32,21 +33,21 @@ setState(() {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
-                      Categaries(' categaries'),
+                      categories(' Ocean', StaticImagesCategories.ocean),
+                      categories(' Nature', StaticImagesCategories.nature),
+                      categories(
+                          ' Cityscapes', StaticImagesCategories.citySpace),
+                      categories(' Animals', StaticImagesCategories.animal),
+                      categories(' Technology', StaticImagesCategories.tech),
+                      categories(' Space', StaticImagesCategories.space),
+                      categories(
+                          ' Minimalist', StaticImagesCategories.minumlistic),
+                      categories(' Sports', StaticImagesCategories.sports),
+                      categories(' Fantasy', StaticImagesCategories.fantasy),
+                      categories(' Food & Drink', StaticImagesCategories.foods),
+                      categories(' Art & Design', StaticImagesCategories.art),
+                      categories(' Flowers', StaticImagesCategories.flowers),
+                      categories(' Seasons', StaticImagesCategories.sesons),
                     ],
                   ),
                 ),
@@ -65,25 +66,19 @@ setState(() {
                             snapshot.hasData) {
                           return GridView.builder(
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 10,
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 1,
                                       childAspectRatio: 0.5,
-                                      mainAxisSpacing: 10),
+                                      mainAxisSpacing: 4),
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: snapshot.data!.photos!.length,
                               itemBuilder: (context, index) {
                                 return Container(
-                                    padding: EdgeInsets.all(5),
-                                    decoration: BoxDecoration(boxShadow: [
-                                      BoxShadow(
-                                          color: const Color.fromARGB(
-                                              255, 53, 7, 76),
-                                          blurRadius: 5,
-                                          offset: Offset(0, 0),
-                                          spreadRadius: 1)
-                                    ], borderRadius: BorderRadius.circular(20)),
+                                    padding: const EdgeInsets.only(
+                                        left: 2, right: 2),
+                                    decoration: const BoxDecoration(),
                                     child: image(snapshot, index, context));
                               });
                         } else {
