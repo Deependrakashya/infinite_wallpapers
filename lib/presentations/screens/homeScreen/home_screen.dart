@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_wallpapers/const.dart';
+import 'package:infinite_wallpapers/getx.dart';
 import 'package:infinite_wallpapers/model/ApiCall/clustured_api.dart';
 import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 import 'package:infinite_wallpapers/presentations/views/categaries.dart';
@@ -14,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  MyController controller = MyController();
   bool searchTap = false;
   @override
   Widget build(BuildContext context) {
@@ -21,11 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            MySliverAppBar(context, searchTap, (bool newSearchTap) {
-              setState(() {
-                searchTap = newSearchTap;
-              });
-            }),
+            MySliverAppBar(context, controller),
             SliverToBoxAdapter(
                 child: Column(
               children: [

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_wallpapers/presentations/screens/splashScreen/splash_screen.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.lobsterTextTheme(),
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
             displayMedium: TextStyle(
           color: Colors.white,
         )),
-        colorSchemeSeed: const Color.fromARGB(255, 67, 1, 99),
+        colorSchemeSeed: const Color.fromARGB(255, 38, 1, 57),
         useMaterial3: true,
       ),
       home: const SplashScreen(),
