@@ -1,15 +1,56 @@
 class StaticImagesCategories {
-  static const String ocean = 'assets/catagories/ocean.jpg';
-  static const String animal = 'assets/catagories/animal.jpg';
-  static const String citySpace = 'assets/catagories/cityspace.jpg';
-  static const String nature = 'assets/catagories/nature.jpg';
-  static const String sports = 'assets/catagories/sport.jpg';
-  static const String fantasy = 'assets/catagories/fantasy.jpg';
-  static const String foods = 'assets/catagories/foods.jpg';
-  static const String art = 'assets/catagories/arts.jpg';
-  static const String flowers = 'assets/catagories/flowers.jpg';
-  static const String sesons = 'assets/catagories/seasons.jpg';
-  static const String tech = 'assets/catagories/tech.jpg';
-  static const String space = 'assets/catagories/space.jpg';
-  static const String minumlistic = 'assets/catagories/minimalistic.jpg';
+  List<Map<String, String>> catagories = [
+    {
+      'title': 'Ocean',
+      'imgUrl': 'assets/catagories/ocean.jpg',
+    },
+    {
+      'title': 'Animal',
+      'imgUrl': 'assets/catagories/animal.jpg',
+    },
+    {
+      'title': 'citySpace',
+      'imgUrl': 'assets/catagories/cityspace.jpg',
+    },
+    {
+      'title': 'nature',
+      'imgUrl': 'assets/catagories/nature.jpg',
+    },
+    {
+      'title': 'sports',
+      'imgUrl': 'assets/catagories/sport.jpg',
+    },
+    {
+      'title': 'fantasy',
+      'imgUrl': 'assets/catagories/fantasy.jpg',
+    },
+    {
+      'title': 'foods',
+      'imgUrl': 'assets/catagories/foods.jpg',
+    },
+    {
+      'title': 'art',
+      'imgUrl': 'assets/catagories/arts.jpg',
+    },
+    {
+      'title': 'flowers',
+      'imgUrl': 'assets/catagories/flowers.jpg',
+    },
+    {
+      'title': 'Seasons',
+      'imgUrl': 'assets/catagories/seasons.jpg',
+    },
+    {
+      'title': 'tech',
+      'imgUrl': 'assets/catagories/tech.jpg',
+    },
+    {
+      'title': 'space',
+      'imgUrl': 'assets/catagories/space.jpg',
+    },
+    {
+      'title': 'minimalistic',
+      'imgUrl': 'assets/catagories/minimalistic.jpg',
+    },
+  ];
 }

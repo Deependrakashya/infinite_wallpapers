@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:infinite_wallpapers/presentations/screens/homeScreen/home_screen.dart';
@@ -63,7 +64,14 @@ class _HomePageState extends State<BottomNaviagtion> {
                     iconColor: Colors.yellow,
                   ),
                   GButton(
-                    icon: Icons.image_rounded,
+                    icon: Icons.clear,
+                    leading: ImageIcon(
+                      AssetImage(
+                          'assets/bottomNavigation/image.png'), // Path to your image
+                      size: 24,
+                      color: Colors
+                          .yellow, // Set the size of your custom image icon
+                    ),
                     backgroundGradient: LinearGradient(
                         colors: [Color.fromRGBO(58, 58, 82, 1), Colors.yellow]),
                     text: 'Anime',

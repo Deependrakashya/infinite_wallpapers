@@ -3,6 +3,7 @@ import 'package:infinite_wallpapers/const.dart';
 import 'package:infinite_wallpapers/getx.dart';
 import 'package:infinite_wallpapers/model/ApiCall/clustured_api.dart';
 import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
+import 'package:infinite_wallpapers/presentations/screens/setwallpaper.dart';
 import 'package:infinite_wallpapers/presentations/views/categaries.dart';
 
 import 'package:infinite_wallpapers/presentations/views/image.dart';
@@ -16,7 +17,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   MyController controller = MyController();
+  var categorieslist = StaticImagesCategories().catagories;
+
   bool searchTap = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,27 +31,17 @@ class _HomeScreenState extends State<HomeScreen> {
             SliverToBoxAdapter(
                 child: Column(
               children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      categories(' Ocean', StaticImagesCategories.ocean),
-                      categories(' Nature', StaticImagesCategories.nature),
-                      categories(
-                          ' Cityscapes', StaticImagesCategories.citySpace),
-                      categories(' Animals', StaticImagesCategories.animal),
-                      categories(' Technology', StaticImagesCategories.tech),
-                      categories(' Space', StaticImagesCategories.space),
-                      categories(
-                          ' Minimalist', StaticImagesCategories.minumlistic),
-                      categories(' Sports', StaticImagesCategories.sports),
-                      categories(' Fantasy', StaticImagesCategories.fantasy),
-                      categories(' Food & Drink', StaticImagesCategories.foods),
-                      categories(' Art & Design', StaticImagesCategories.art),
-                      categories(' Flowers', StaticImagesCategories.flowers),
-                      categories(' Seasons', StaticImagesCategories.sesons),
-                    ],
-                  ),
+                Container(
+                  height: 70,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categorieslist.length,
+                      itemBuilder: (context, index) {
+                        return categories(
+                            categorieslist[index]['title'].toString(),
+                            categorieslist[index]['imgUrl'].toString());
+                      }),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -73,11 +67,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: snapshot.data!.photos!.length,
                               itemBuilder: (context, index) {
-                                return Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 2, right: 2),
-                                    decoration: const BoxDecoration(),
-                                    child: image(snapshot, index, context));
+                                return InkWell(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Setwallpaper(
+                                          imgUrl: snapshot.data!.photos![index]
+                                              .src!.portrait
+                                              .toString(),
+                                        ),
+                                      )),
+                                  child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 2, right: 2),
+                                      decoration: const BoxDecoration(),
+                                      child: image(snapshot, index, context)),
+                                );
                               });
                         } else {
                           return Container(
