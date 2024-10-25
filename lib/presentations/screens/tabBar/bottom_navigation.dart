@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:infinite_wallpapers/presentations/screens/anime/anime.dart';
 import 'package:infinite_wallpapers/presentations/screens/homeScreen/home_screen.dart';
 
 class BottomNaviagtion extends StatefulWidget {
@@ -21,7 +22,7 @@ class _HomePageState extends State<BottomNaviagtion> {
 
   final List<Widget> screens = [
     const HomeScreen(),
-    const HomeScreen(),
+    const AnimeScreen(),
   ];
 
   @override

@@ -139,23 +139,24 @@ class Thumbs {
 class Meta {
   int? currentPage;
   int? lastPage;
-  String? perPage;
+  int? perPage; // Change this to int to match the API response
   int? total;
   String? query;
   String? seed;
 
-  Meta(
-      {this.currentPage,
-      this.lastPage,
-      this.perPage,
-      this.total,
-      this.query,
-      this.seed});
+  Meta({
+    this.currentPage,
+    this.lastPage,
+    this.perPage,
+    this.total,
+    this.query,
+    this.seed,
+  });
 
   Meta.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
     lastPage = json['last_page'];
-    perPage = json['per_page'];
+    perPage = json['per_page']; // No need for casting since it's an int
     total = json['total'];
     query = json['query'];
     seed = json['seed'];

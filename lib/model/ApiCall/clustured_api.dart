@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:infinite_wallpapers/model/ApiCall/wallhavenapi.dart';
 import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 import 'package:http/http.dart' as https;
 
@@ -19,7 +20,7 @@ Future<ClusturedPhotos> ClusturedPhotosApiCall() async {
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
 
-    return ClusturedPhotos.fromJson(data);//
+    return ClusturedPhotos.fromJson(data); //
   } else {
     print('Failed to load photos: ${response.statusCode}');
     throw 'data not found ';

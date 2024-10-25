@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_wallpapers/const.dart';
 import 'package:infinite_wallpapers/getx.dart';
-import 'package:infinite_wallpapers/model/ApiCall/clustured_api.dart';
+
 import 'package:infinite_wallpapers/model/ApiCall/wallhavenapi.dart';
 import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 import 'package:infinite_wallpapers/presentations/screens/setwallpaper.dart';
@@ -9,14 +9,14 @@ import 'package:infinite_wallpapers/presentations/views/categaries.dart';
 
 import 'package:infinite_wallpapers/presentations/views/image.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class AnimeScreen extends StatefulWidget {
+  const AnimeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<AnimeScreen> createState() => _AnimeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _AnimeScreenState extends State<AnimeScreen> {
   MyController controller = MyController();
   var categorieslist = StaticImagesCategories().catagories;
   @override
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: FutureBuilder(
-                      future: ClusturedPhotosApiCall(),
+                      future: WallheavenApiCall(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -71,23 +71,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mainAxisSpacing: 4),
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.photos!.length,
+                              itemCount: snapshot.data!.data!.length,
                               itemBuilder: (context, index) {
+                                var wallpaper = snapshot.data!.data![index];
                                 return InkWell(
                                   onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => Setwallpaper(
-                                          imgUrl: snapshot.data!.photos![index]
-                                              .src!.portrait
-                                              .toString(),
-                                        ),
+                                            imgUrl: snapshot.data!.data![index]
+                                                .thumbs!.large
+                                                .toString()),
                                       )),
                                   child: Container(
+                                      height: 200,
+                                      width: 200,
                                       padding: const EdgeInsets.only(
                                           left: 2, right: 2),
                                       decoration: const BoxDecoration(),
-                                      child: image(snapshot, index, context)),
+                                      child: Image.network(
+                                        wallpaper.thumbs!.large.toString(),
+                                        fit: BoxFit.cover,
+                                      )),
                                 );
                               });
                         } else {
