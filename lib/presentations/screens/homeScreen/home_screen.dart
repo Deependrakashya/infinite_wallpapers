@@ -19,11 +19,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   MyController controller = MyController();
   var categorieslist = StaticImagesCategories().catagories;
-  @override
-  void initState() {
-    super.initState();
-    WallheavenApiCall();
-  }
 
   bool searchTap = false;
 

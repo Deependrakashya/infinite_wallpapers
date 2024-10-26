@@ -154,10 +154,22 @@ class Meta {
   });
 
   Meta.fromJson(Map<String, dynamic> json) {
-    currentPage = json['current_page'];
-    lastPage = json['last_page'];
-    perPage = json['per_page']; // No need for casting since it's an int
-    total = json['total'];
+    currentPage = json['current_page'] is String
+        ? int.tryParse(json['current_page']) // Parse if it's a string
+        : json['current_page'] as int?;
+
+    lastPage = json['last_page'] is String
+        ? int.tryParse(json['last_page'])
+        : json['last_page'] as int?;
+
+    perPage = json['per_page'] is String
+        ? int.tryParse(json['per_page'])
+        : json['per_page'] as int?;
+
+    total = json['total'] is String
+        ? int.tryParse(json['total'])
+        : json['total'] as int?;
+
     query = json['query'];
     seed = json['seed'];
   }

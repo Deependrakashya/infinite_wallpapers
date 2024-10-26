@@ -79,8 +79,8 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => Setwallpaper(
-                                            imgUrl: snapshot.data!.data![index]
-                                                .thumbs!.large
+                                            imgUrl: snapshot
+                                                .data!.data![index].path
                                                 .toString()),
                                       )),
                                   child: Container(
@@ -102,6 +102,15 @@ class _AnimeScreenState extends State<AnimeScreen> {
                         }
                       }),
                 ),
+                MaterialButton(
+                  onPressed: () {
+                    int pageno = 2;
+
+                    WallheavenApiCall(page: pageno.toString());
+                    pageno++;
+                  },
+                  child: Text('loade more'),
+                )
               ],
             ))
           ],

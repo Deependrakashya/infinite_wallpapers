@@ -9,11 +9,15 @@ Future<Wallhaven> WallheavenApiCall(
   search ??= 'anime';
   page ??= '1';
   sorting ??= 'relevance';
-  purity ??= '100'; // '100' for SFW, you can adjust based on your needs.
+  purity ??= '111';
+  // '100' for SFW, you can adjust based on your needs.
+  String apikey = "lzq0ReYyoMEjtIarTSc4rCnYbDTJPeUy&q";
 
   final baseUrl = 'https://wallhaven.cc/api/v1/search';
-  final finalUrl =
-      '$baseUrl?q=$search&purity=$purity&page=$page&sorting=$sorting&per_page=100';
+  // final finalUrl = '$baseUrl?q=categories=010&sorting=$sorting&apikey=$apikey';
+  final finalUrl = '$baseUrl?categories=010&purity=110';
+  // final finalUrl =
+  //     'https://wallhaven.cc/api/v1/search?q=categories=101&page=$page&purity=111&page=1&sorting=relevance&per_page=24&apikey=$apikey&ratios=16x9';
   print(finalUrl.toString());
 
   // final finalUrl = 'https://wallhaven.cc/api/v1/search?q=anime';
@@ -21,7 +25,7 @@ Future<Wallhaven> WallheavenApiCall(
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
     print(' wallheaven api successfully called');
-    print(data.toString());
+    // print(data.toString());
     return Wallhaven.fromJson(data);
   } else {
     print('Failed to load photos: ${response.statusCode}');

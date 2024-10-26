@@ -14,7 +14,7 @@ class Setwallpaper extends StatelessWidget {
             height: double.infinity,
             width: double.infinity,
             imgUrl,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
           Positioned(
               // left: 10,
