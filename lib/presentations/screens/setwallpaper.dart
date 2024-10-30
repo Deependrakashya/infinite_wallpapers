@@ -14,9 +14,9 @@ class Setwallpaper extends StatefulWidget {
 class _SetwallpaperState extends State<Setwallpaper> {
   void setwallpaper(String url) async {
     bool getPermissionStatus = await requestPermissions();
-    if (!getPermissionStatus) {
-      requestPermissions();
-      print(getPermissionStatus);
+    print(getPermissionStatus);
+    if (getPermissionStatus) {
+      downloadAndSetWallpaper(imageUrl: url);
 
       // go ahead with set wallpaper
     } else {

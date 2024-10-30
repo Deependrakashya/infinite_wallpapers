@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: snapshot.data!.photos!.length,
                               itemBuilder: (context, index) {
+                                print(snapshot.data!.photos![0].alt);
                                 return InkWell(
                                   onTap: () => Navigator.push(
                                       context,

@@ -67,8 +67,11 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
 
 Widget image(
     AsyncSnapshot<ClusturedPhotos> snapshot, int index, BuildContext context) {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(5),
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(5),
+      gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
+    ),
     child: Image.network(
       snapshot.data!.photos![index].src!.medium.toString(),
       fit: BoxFit.cover,

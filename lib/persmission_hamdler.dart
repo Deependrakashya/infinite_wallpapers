@@ -1,7 +1,10 @@
+import 'package:infinite_wallpapers/setwallpaper_handler.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 Future<bool> requestPermissions() async {
-  if (await Permission.storage.isDenied) {
+  Permission.storage.request();
+  var status = await Permission.storage.status;
+  if (status.isDenied) {
     PermissionStatus status = await Permission.storage.request();
 
     if (status.isPermanentlyDenied) {
@@ -10,7 +13,7 @@ Future<bool> requestPermissions() async {
       return false;
     }
   }
-  if (await Permission.storage.request().isGranted) {
+  if (status.isGranted) {
     print('app has storage permission');
     return true;
     // You now have access to storage, proceed with downloading or setting wallpaper.
