@@ -16,12 +16,12 @@ class _SetwallpaperState extends State<Setwallpaper> {
     bool getPermissionStatus = await requestPermissions();
     print(getPermissionStatus);
     if (getPermissionStatus) {
-      downloadAndSetWallpaper(imageUrl: url);
+      downloadAndSetWallpaper(url);
 
       // go ahead with set wallpaper
     } else {
       print('app has storage access');
-      downloadAndSetWallpaper(imageUrl: url);
+      downloadAndSetWallpaper(url);
     }
   }
 
@@ -55,7 +55,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                 child: MaterialButton(
                   color: Colors.red,
                   onPressed: () {
-                    setwallpaper(widget.imgUrl);
+                    downloadAndSetWallpaper(widget.imgUrl);
                   },
                   child: Text('set Wallpaper'),
                 ),

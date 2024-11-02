@@ -6,7 +6,7 @@ class ClusturedPhotos {
   String? nextPage;
   String? prevPage;
 
-  ClusturedPhotos(
+  ClusturedPhotos(List data,
       {this.page,
       this.perPage,
       this.photos,

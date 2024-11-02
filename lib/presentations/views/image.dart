@@ -33,7 +33,7 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
                       suffixIcon: IconButton(
                           padding: const EdgeInsets.all(5),
                           onPressed: () {
-                            controller.toogleSearchBar();
+                            controller.toggleSearchBar();
                           },
                           icon: const Icon(
                             Icons.cancel,
@@ -55,7 +55,7 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
           : Container(
               child: IconButton(
                   onPressed: () {
-                    controller.toogleSearchBar();
+                    controller.toggleSearchBar();
                   },
                   icon: const Icon(
                     Icons.search,
@@ -65,15 +65,14 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
   );
 }
 
-Widget image(
-    AsyncSnapshot<ClusturedPhotos> snapshot, int index, BuildContext context) {
+Widget image(String url, int index, BuildContext context) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(5),
       gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
     ),
     child: Image.network(
-      snapshot.data!.photos![index].src!.medium.toString(),
+      url,
       fit: BoxFit.cover,
       height: double.infinity,
     ),
