@@ -4,6 +4,7 @@ import 'package:infinite_wallpapers/getx.dart';
 import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 
 SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
+  TextEditingController textEditingController = TextEditingController();
   return SliverAppBar(
     title: const Text(
       'infinite wallpapers',
@@ -19,7 +20,9 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
                   padding: const EdgeInsets.all(5),
                   width: MediaQuery.of(context).size.width * .95,
                   child: TextField(
-                    onSubmitted: (value) => print(' submit pressed'),
+                    controller: textEditingController,
+                    onSubmitted: (value) => controller
+                        .searchPexelsImages(textEditingController.text),
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.white,
@@ -41,13 +44,16 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
                             size: 20,
                           )),
                       border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderRadius:
+                              BorderRadius.only(topLeft: Radius.circular(10)),
                           borderSide: BorderSide(color: Colors.yellow)),
                       enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderRadius:
+                              BorderRadius.only(topLeft: Radius.circular(10)),
                           borderSide: BorderSide(color: Colors.yellow)),
                       focusedBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderRadius:
+                              BorderRadius.only(topLeft: Radius.circular(10)),
                           borderSide: BorderSide(color: Colors.yellow)),
                     ),
                   )),

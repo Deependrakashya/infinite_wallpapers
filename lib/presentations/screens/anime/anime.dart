@@ -46,7 +46,8 @@ class _AnimeScreenState extends State<AnimeScreen> {
                       itemBuilder: (context, index) {
                         return categories(
                             categorieslist[index]['title'].toString(),
-                            categorieslist[index]['imgUrl'].toString());
+                            categorieslist[index]['imgUrl'].toString(),
+                            controller);
                       }),
                 ),
                 Padding(
@@ -79,9 +80,11 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => Setwallpaper(
-                                            imgUrl: snapshot
-                                                .data!.data![index].path
-                                                .toString()),
+                                          imgUrl: snapshot
+                                              .data!.data![index].path
+                                              .toString(),
+                                          controller: controller,
+                                        ),
                                       )),
                                   child: Container(
                                       height: 200,
