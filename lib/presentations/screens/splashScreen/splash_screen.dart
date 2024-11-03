@@ -13,20 +13,39 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     redirect();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('SplashScreen Screen'),
+        child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      'assets/onboarding/logo_for_infinite_wallpaper_app.png',
+                    ),
+                    fit: BoxFit.cover)),
+            child: Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(
+                    // left: MediaQuery.of(context).size.width * .35,
+                    top: MediaQuery.of(context).size.height * .16),
+                child: Text(
+                  ' Infinite wallpapers',
+                  style: TextStyle(fontSize: 24, color: Colors.white),
+                ))),
       ),
     );
   }
 
   Future<void> redirect() async {
-    await Future.delayed(const Duration(seconds: 5), () {
+    await Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const BottomNaviagtion()));
     });
