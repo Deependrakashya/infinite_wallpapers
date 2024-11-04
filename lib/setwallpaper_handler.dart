@@ -5,7 +5,7 @@ Future<void> downloadAndSetWallpaper(
     String imgUrl, MyController controller) async {
   controller.downloading.value = true;
   var progress = await Wallpaper.imageDownloadProgress(imgUrl,
-      location: DownloadLocation.temporaryDirectory);
+      location: DownloadLocation.externalDirectory);
   progress.listen((onData) {
     controller.downloadedData.value = onData;
     print('data $onData');
@@ -18,13 +18,13 @@ Future<void> downloadAndSetWallpaper(
 Future<void> setHomeScreen() async {
   await Wallpaper.homeScreen(
       options: RequestSizeOptions.resizeExact,
-      location: DownloadLocation.temporaryDirectory);
+      location: DownloadLocation.externalDirectory);
 }
 
 Future<void> setLockScreen() async {
-  await Wallpaper.lockScreen(location: DownloadLocation.temporaryDirectory);
+  await Wallpaper.lockScreen(location: DownloadLocation.externalDirectory);
 }
 
 Future<void> setBothScreen() async {
-  await Wallpaper.bothScreen(location: DownloadLocation.temporaryDirectory);
+  await Wallpaper.bothScreen(location: DownloadLocation.externalDirectory);
 }

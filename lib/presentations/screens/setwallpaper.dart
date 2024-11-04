@@ -21,11 +21,17 @@ class _SetwallpaperState extends State<Setwallpaper> {
     return Scaffold(
       body: Stack(
         children: [
-          Image.network(
-            height: double.infinity,
-            width: double.infinity,
-            widget.imgUrl,
-            fit: BoxFit.cover,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(45)),
+              gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
+            ),
+            child: Image.network(
+              height: double.infinity,
+              width: double.infinity,
+              widget.imgUrl,
+              fit: BoxFit.cover,
+            ),
           ),
           Positioned(
               top: 40,

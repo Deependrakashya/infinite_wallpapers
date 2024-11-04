@@ -34,7 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: CustomScrollView(
           controller: controller.scrollController,
           slivers: [
-            MySliverAppBar(context, controller),
+            MySliverAppBar(
+              context,
+              controller,
+            ),
             SliverToBoxAdapter(
               child: Column(
                 children: [

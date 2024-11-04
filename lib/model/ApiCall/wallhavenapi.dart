@@ -4,20 +4,27 @@ import 'package:infinite_wallpapers/model/wellhaven/wellhaven.dart';
 import 'package:http/http.dart' as https;
 
 Future<Wallhaven> WallheavenApiCall(
-    {String? search, String? purity, String? sorting, String? page}) async {
+    {String? search,
+    String? purity,
+    String? sorting,
+    String? page,
+    String? path}) async {
   // Default values if parameters are null
   search ??= 'anime';
   page ??= '1';
   sorting ??= 'relevance';
   purity ??= '111';
+  path ??=
+      'anime&categories=010&purity=000&ratios=9x16&sorting=relevance&order=desc&ai_art_filter=0&page=1';
+
   // '100' for SFW, you can adjust based on your needs.
   String apikey = "lzq0ReYyoMEjtIarTSc4rCnYbDTJPeUy&q";
 
   final baseUrl = 'https://wallhaven.cc/api/v1/search';
-  // final finalUrl = '$baseUrl?q=categories=010&sorting=$sorting&apikey=$apikey';
-  final finalUrl = '$baseUrl?categories=010&purity=110';
-  // final finalUrl =
-  //     'https://wallhaven.cc/api/v1/search?q=categories=101&page=$page&purity=111&page=1&sorting=relevance&per_page=24&apikey=$apikey&ratios=16x9';
+
+  final finalUrl =
+      '$baseUrl?q=$path&categories=010&ratios=9x16&sorting=relevance&order=desc&page=$page';
+
   print(finalUrl.toString());
 
   // final finalUrl = 'https://wallhaven.cc/api/v1/search?q=anime';

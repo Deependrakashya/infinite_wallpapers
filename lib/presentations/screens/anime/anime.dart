@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:infinite_wallpapers/const.dart';
 import 'package:infinite_wallpapers/getx.dart';
 
@@ -17,12 +18,14 @@ class AnimeScreen extends StatefulWidget {
 }
 
 class _AnimeScreenState extends State<AnimeScreen> {
-  MyController controller = MyController();
-  var categorieslist = StaticImagesCategories().catagories;
+  final MyController controller = Get.put(MyController());
+  var categorieslist = StaticImagesCategories().animeCatagories;
   @override
   void initState() {
     super.initState();
-    WallheavenApiCall();
+    controller.animescrollerController
+        .addListener(controller.animeloadMorePhotos);
+    controller.animefetchInitialPhotos();
   }
 
   bool searchTap = false;
@@ -32,8 +35,12 @@ class _AnimeScreenState extends State<AnimeScreen> {
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
+          controller: controller.animescrollerController,
           slivers: [
-            MySliverAppBar(context, controller),
+            AnimeSliverAppBar(
+              context,
+              controller,
+            ),
             SliverToBoxAdapter(
                 child: Column(
               children: [
@@ -44,76 +51,61 @@ class _AnimeScreenState extends State<AnimeScreen> {
                       scrollDirection: Axis.horizontal,
                       itemCount: categorieslist.length,
                       itemBuilder: (context, index) {
-                        return categories(
-                            categorieslist[index]['title'].toString(),
-                            categorieslist[index]['imgUrl'].toString(),
-                            controller);
+                        return animeCatagories(
+                          categorieslist[index]['title'].toString(),
+                          controller,
+                          categorieslist[index]['q'].toString(),
+                        );
                       }),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FutureBuilder(
-                      future: WallheavenApiCall(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Container(
-                            child: const Text(' loading data '),
-                          );
-                        } else if (snapshot.connectionState ==
-                                ConnectionState.done &&
-                            snapshot.hasData) {
-                          return GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 1,
-                                      childAspectRatio: 0.5,
-                                      mainAxisSpacing: 4),
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.data!.length,
-                              itemBuilder: (context, index) {
-                                var wallpaper = snapshot.data!.data![index];
-                                return InkWell(
-                                  onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Setwallpaper(
-                                          imgUrl: snapshot
-                                              .data!.data![index].path
-                                              .toString(),
-                                          controller: controller,
-                                        ),
-                                      )),
-                                  child: Container(
-                                      height: 200,
-                                      width: 200,
-                                      padding: const EdgeInsets.only(
-                                          left: 2, right: 2),
-                                      decoration: const BoxDecoration(),
-                                      child: Image.network(
-                                        wallpaper.thumbs!.large.toString(),
-                                        fit: BoxFit.cover,
-                                      )),
-                                );
-                              });
-                        } else {
-                          return Container(
-                            child: const Text(' loading data '),
-                          );
-                        }
-                      }),
-                ),
-                MaterialButton(
-                  onPressed: () {
-                    int pageno = 2;
-
-                    WallheavenApiCall(page: pageno.toString());
-                    pageno++;
-                  },
-                  child: Text('loade more'),
-                )
+                    padding: const EdgeInsets.all(8.0),
+                    child: Obx(() {
+                      if (controller.animePhotos.isEmpty) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        return GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 1,
+                            childAspectRatio: 0.5,
+                            mainAxisSpacing: 4,
+                          ),
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: controller.animePhotos.length,
+                          itemBuilder: (context, index) {
+                            var wallpaper = controller.animePhotos[index];
+                            return InkWell(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Setwallpaper(
+                                    imgUrl: wallpaper.path.toString(),
+                                    controller: controller,
+                                  ),
+                                ),
+                              ),
+                              child: Container(
+                                height: 200,
+                                width: 200,
+                                margin:
+                                    const EdgeInsets.only(left: 2, right: 2),
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: [Colors.yellow, Colors.black]),
+                                ),
+                                child: Image.network(
+                                  wallpaper.thumbs.original.toString(),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    })),
               ],
             ))
           ],

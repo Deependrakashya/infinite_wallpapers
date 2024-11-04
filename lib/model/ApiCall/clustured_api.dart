@@ -28,11 +28,11 @@ Future<ClusturedPhotos> ClusturedPhotosApiCall(String page) async {
   }
 }
 
-Future<ClusturedPhotos> serachPexelapi(String search) async {
+Future<ClusturedPhotos> serachPexelapi(String search, String page) async {
   final url = Uri.https(
     'api.pexels.com', // Base URL
     '/v1/search', // Path
-    {'query': search, 'page': '1', 'per_page': '80'}, // Query parameters
+    {'query': search, 'page': page, 'per_page': '80'}, // Query parameters
   );
   var res = await https.get(url, headers: {
     'Authorization': 'X4XsklGpZ2PNKqqaMR01n53ee5Pyv9ZpatIvcs9DhQ5PrYfhM8z8c6jm'

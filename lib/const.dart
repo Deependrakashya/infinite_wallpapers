@@ -53,4 +53,12 @@ class StaticImagesCategories {
       'imgUrl': 'assets/catagories/minimalistic.jpg',
     },
   ];
+
+  List<Map<String, String>> animeCatagories = [
+    {'title': 'amime girls', 'q': 'anime+girls'},
+    {'title': 'Naruto', 'q': 'Naruto'},
+    {'title': 'anime', 'q': 'anime'},
+    {'title': 'manga', 'q': 'manga'},
+    {'title': 'Dragon Ball Z', 'q': 'Dragon+Ball+Z'},
+  ];
 }
