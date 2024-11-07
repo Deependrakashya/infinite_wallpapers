@@ -20,6 +20,7 @@ class MyController extends GetxController {
   RxString catagoriesSearch = ''.obs;
   RxBool categoriesTapped = false.obs;
   RxList animePhotos = [].obs;
+  RxBool setWallpaperLoader = true.obs;
 
   int page = 1;
   void toggleSearchBar() {
@@ -124,12 +125,12 @@ class MyController extends GetxController {
     String search,
   ) async {
     animePageisLoading.value = true;
+    page = 2;
     try {
       var data = await WallheavenApiCall(
-        path: search,
+        search: search,
       );
       if (data.data != null) {
-        print(data.data![0].toString());
         animePhotos.replaceRange(0, animePhotos.length, data.data!.toList());
       }
     } catch (e) {
@@ -141,12 +142,14 @@ class MyController extends GetxController {
 
   void animeloadMorePhotos() async {
     if (animescrollerController.position.pixels ==
-        animescrollerController.position.maxScrollExtent) {
+            animescrollerController.position.maxScrollExtent &&
+        !getTouch.value) {
       // Check if not already loading
-
+      print('search bar is closed');
       // Set loading flag
 // laoding more images for clustured or defult homescreen
       try {
+        print(page.toString() + 'laoding more');
         var data = await WallheavenApiCall(page: page.toString());
 
         if (data.data != null) {
@@ -161,14 +164,16 @@ class MyController extends GetxController {
         isLoading.value = false; // Reset loading flag
       }
     }
-    if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent &&
+    if (animescrollerController.position.pixels ==
+            animescrollerController.position.maxScrollExtent &&
         getTouch.value) {
+      print('search bar is open $page');
       try {
         var data = await WallheavenApiCall(
             search: textEditingController.text, page: page.toString());
         if (data.data != null) {
-          allPhotos.addAll(data.data!.toList()); // Add photos from the response
+          animePhotos
+              .addAll(data.data!.toList()); // Add photos from the response
           page++; // Increment page for next load
         }
       } catch (error) {

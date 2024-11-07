@@ -99,6 +99,15 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                 child: Image.network(
                                   wallpaper.thumbs.original.toString(),
                                   fit: BoxFit.fill,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Center(
+                                          child: Text(
+                                    'conuld \n not loaded ',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  )),
                                 ),
                               ),
                             );
@@ -112,5 +121,11 @@ class _AnimeScreenState extends State<AnimeScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.page = 1;
   }
 }

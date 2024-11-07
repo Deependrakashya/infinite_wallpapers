@@ -12,7 +12,7 @@ class BottomNaviagtion extends StatefulWidget {
 }
 
 class _HomePageState extends State<BottomNaviagtion> {
-  int selectedIndex = 1;
+  int selectedIndex = 0;
   void setIndex(index) {
     setState(() {
       selectedIndex = index;

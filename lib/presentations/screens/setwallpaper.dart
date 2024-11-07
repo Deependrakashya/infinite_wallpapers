@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_wallpapers/getx.dart';
-import 'package:infinite_wallpapers/persmission_hamdler.dart';
+
 import 'package:infinite_wallpapers/presentations/views/setwallpaper_views.dart';
 import 'package:infinite_wallpapers/setwallpaper_handler.dart';
 import 'package:get/get.dart';
@@ -23,7 +23,6 @@ class _SetwallpaperState extends State<Setwallpaper> {
         children: [
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(45)),
               gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
             ),
             child: Image.network(
@@ -122,23 +121,39 @@ class _SetwallpaperState extends State<Setwallpaper> {
                 ? Positioned(
                     bottom: 5,
                     child: Container(
-                      margin: EdgeInsets.all(20),
-                      padding: EdgeInsets.all(10),
-                      width: MediaQuery.of(context).size.width * .9,
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(154, 153, 153, 0.494),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          customButton(widget.controller, setHomeScreen(),
-                              'set as Home Screen'),
-                          customButton(widget.controller, setLockScreen(),
-                              'set as Lock Screen'),
-                          customButton(widget.controller, setBothScreen(),
-                              'set as Both Screen'),
-                        ],
-                      ),
-                    ),
+                        margin: EdgeInsets.all(20),
+                        padding: EdgeInsets.all(10),
+                        width: MediaQuery.of(context).size.width * .9,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(154, 153, 153, 0.494),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Obx(() {
+                          return Center(
+                              child: controller.setWallpaperLoader.value
+                                  ? Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: () => setHomeScreen(),
+                                          child: customButton(widget.controller,
+                                              'set as Home Screen'),
+                                        ),
+                                        InkWell(
+                                          onTap: () => setLockScreen(),
+                                          child: customButton(widget.controller,
+                                              'set as Lock Screen'),
+                                        ),
+                                        InkWell(
+                                          onTap: () => setBothScreen(),
+                                          child: customButton(widget.controller,
+                                              'set as Both Screen'),
+                                        ),
+                                      ],
+                                    )
+                                  : CircularProgressIndicator(
+                                      semanticsLabel: 'Hold on Working in it',
+                                      color: Colors.yellow,
+                                    ));
+                        })),
                   )
                 : const SizedBox();
           }),
@@ -152,5 +167,6 @@ class _SetwallpaperState extends State<Setwallpaper> {
     super.dispose();
     widget.controller.downloading;
     widget.controller.downloadingDone.value = false;
+    widget.controller.setWallpaperLoader.value = false;
   }
 }

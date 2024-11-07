@@ -10,12 +10,12 @@ Future<Wallhaven> WallheavenApiCall(
     String? page,
     String? path}) async {
   // Default values if parameters are null
-  search ??= 'anime';
+  search ??= '';
   page ??= '1';
   sorting ??= 'relevance';
   purity ??= '111';
-  path ??=
-      'anime&categories=010&purity=000&ratios=9x16&sorting=relevance&order=desc&ai_art_filter=0&page=1';
+  // path ??=
+  //     'anime&categories=010&purity=000&ratios=9x16&sorting=relevance&order=desc&ai_art_filter=0&page=1';
 
   // '100' for SFW, you can adjust based on your needs.
   String apikey = "lzq0ReYyoMEjtIarTSc4rCnYbDTJPeUy&q";
@@ -23,7 +23,7 @@ Future<Wallhaven> WallheavenApiCall(
   final baseUrl = 'https://wallhaven.cc/api/v1/search';
 
   final finalUrl =
-      '$baseUrl?q=$path&categories=010&ratios=9x16&sorting=relevance&order=desc&page=$page';
+      '$baseUrl?q=$search&categories=010&ratios=9x16&sorting=relevance&order=desc&page=$page';
 
   print(finalUrl.toString());
 

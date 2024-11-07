@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:infinite_wallpapers/getx.dart';
 import 'package:wallpaper/wallpaper.dart';
+
+final MyController controller = Get.put(MyController());
 
 Future<void> downloadAndSetWallpaper(
     String imgUrl, MyController controller) async {
@@ -16,15 +20,33 @@ Future<void> downloadAndSetWallpaper(
 }
 
 Future<void> setHomeScreen() async {
-  await Wallpaper.homeScreen(
+  controller.setWallpaperLoader.value = false;
+
+  var data = await Wallpaper.homeScreen(
       options: RequestSizeOptions.resizeExact,
       location: DownloadLocation.externalDirectory);
+  if (data == 'Screen Set Successfully') {
+    controller.setWallpaperLoader.value = true;
+  }
 }
 
 Future<void> setLockScreen() async {
-  await Wallpaper.lockScreen(location: DownloadLocation.externalDirectory);
+  controller.setWallpaperLoader.value = false;
+  print('lock screen pressed');
+  var data =
+      await Wallpaper.lockScreen(location: DownloadLocation.externalDirectory);
+  if (data == 'Lock Screen Set Successfully') {
+    controller.setWallpaperLoader.value = true;
+  }
+  print(data);
 }
 
 Future<void> setBothScreen() async {
-  await Wallpaper.bothScreen(location: DownloadLocation.externalDirectory);
+  print('both screen pressed');
+
+  var data =
+      await Wallpaper.bothScreen(location: DownloadLocation.externalDirectory);
+  if (data == 'Home and Lock Screen Set Successfully') {
+    controller.setWallpaperLoader.value = true;
+  }
 }

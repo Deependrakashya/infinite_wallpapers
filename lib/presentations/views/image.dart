@@ -33,6 +33,8 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
                     cursorHeight: 14,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 20),
+                      hintText: 'Search Here?',
+                      hintStyle: TextStyle(color: Colors.white),
                       suffixIcon: IconButton(
                           padding: const EdgeInsets.all(5),
                           onPressed: () {
@@ -69,6 +71,7 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
 }
 
 SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
+  controller.page = 1;
   TextEditingController textEditingController =
       controller.textEditingController;
   return SliverAppBar(
@@ -99,10 +102,13 @@ SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
                     cursorHeight: 14,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 20),
+                      hintText: 'Search Here?',
+                      hintStyle: TextStyle(color: Colors.white),
                       suffixIcon: IconButton(
                           padding: const EdgeInsets.all(5),
                           onPressed: () {
                             controller.toggleSearchBar();
+                            controller.page = 0;
                           },
                           icon: const Icon(
                             Icons.cancel,

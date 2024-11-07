@@ -7,15 +7,7 @@
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
- <!-- Basic storage access for Android 9 and below -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"  />
 
-  <!-- Full storage access permission for Android 11 and above (use sparingly) -->
-        <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-
-        <!-- Media-specific permissions for Android 13+ (optional) -->
-        <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <application
         android:label="infinite wallpapers"
         android:name="${applicationName}"
