@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:infinite_wallpapers/model/ApiCall/clustured_api.dart';
 import 'package:infinite_wallpapers/model/ApiCall/wallhavenapi.dart';
 import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
-import 'package:infinite_wallpapers/model/wellhaven/wellhaven.dart';
 
 class MyController extends GetxController {
   ScrollController scrollController = ScrollController();
@@ -44,7 +43,7 @@ class MyController extends GetxController {
         page++; // Increment page for next load
       }
     } catch (error) {
-      print('Error fetching initial photos: $error');
+      // print('Error fetching initial photos: $error');
     } finally {
       isLoading.value = false; // Reset loading flag
     }
@@ -68,7 +67,7 @@ class MyController extends GetxController {
           page++; // Increment page for next load
         }
       } catch (error) {
-        print('Error loading more photos: $error');
+        // print('Error loading more photos: $error');
       } finally {
         isLoading.value = false; // Reset loading flag
       }
@@ -84,7 +83,7 @@ class MyController extends GetxController {
           page++; // Increment page for next load
         }
       } catch (error) {
-        print('Error loading more photos: $error');
+        // print('Error loading more photos: $error');
       } finally {
         isLoading.value = false; // Reset loading flag
       }
@@ -106,7 +105,7 @@ class MyController extends GetxController {
 // _+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // ANIME STUFF
   Future<void> animefetchInitialPhotos() async {
-    print('anime wallheave initial api called');
+    // print('anime wallheave initial api called');
     animePageisLoading.value = true; // Set loading flag
     try {
       var data = await WallheavenApiCall();
@@ -115,7 +114,7 @@ class MyController extends GetxController {
         page++; // Increment page for next load
       }
     } catch (error) {
-      print('Error fetching initial photos: $error');
+      // print('Error fetching initial photos: $error');
     } finally {
       animePageisLoading.value = false; // Reset loading flag
     }
@@ -134,7 +133,7 @@ class MyController extends GetxController {
         animePhotos.replaceRange(0, animePhotos.length, data.data!.toList());
       }
     } catch (e) {
-      print('Error fetching initial photos: $e');
+      // print('Error fetching initial photos: $e');
     } finally {
       isLoading.value = false;
     }
@@ -145,21 +144,21 @@ class MyController extends GetxController {
             animescrollerController.position.maxScrollExtent &&
         !getTouch.value) {
       // Check if not already loading
-      print('search bar is closed');
+      // print('search bar is closed');
       // Set loading flag
 // laoding more images for clustured or defult homescreen
       try {
-        print(page.toString() + 'laoding more');
+        // print(page.toString() + 'laoding more');
         var data = await WallheavenApiCall(page: page.toString());
 
         if (data.data != null) {
           animePhotos
               .addAll(data.data!.toList()); // Add photos from the response
-          print('page $page');
+          // print('page $page');
           page++; // Increment page for next load
         }
       } catch (error) {
-        print('Error loading more photos: $error');
+        // print('Error loading more photos: $error');
       } finally {
         isLoading.value = false; // Reset loading flag
       }
@@ -167,7 +166,7 @@ class MyController extends GetxController {
     if (animescrollerController.position.pixels ==
             animescrollerController.position.maxScrollExtent &&
         getTouch.value) {
-      print('search bar is open $page');
+      // print('search bar is open $page');
       try {
         var data = await WallheavenApiCall(
             search: textEditingController.text, page: page.toString());
@@ -177,7 +176,7 @@ class MyController extends GetxController {
           page++; // Increment page for next load
         }
       } catch (error) {
-        print('Error loading more photos: $error');
+        // print('Error loading more photos: $error');
       } finally {
         isLoading.value = false; // Reset loading flag
       }

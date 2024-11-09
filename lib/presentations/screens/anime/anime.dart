@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:infinite_wallpapers/const.dart';
 import 'package:infinite_wallpapers/getx.dart';
 
-import 'package:infinite_wallpapers/model/ApiCall/wallhavenapi.dart';
-import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 import 'package:infinite_wallpapers/presentations/screens/setwallpaper.dart';
 import 'package:infinite_wallpapers/presentations/views/categaries.dart';
 
@@ -44,7 +42,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
             SliverToBoxAdapter(
                 child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: 70,
                   child: ListView.builder(
                       shrinkWrap: true,
@@ -62,7 +60,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Obx(() {
                       if (controller.animePhotos.isEmpty) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       } else {
                         return GridView.builder(
                           gridDelegate:
@@ -100,7 +98,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                   wallpaper.thumbs.original.toString(),
                                   fit: BoxFit.fill,
                                   errorBuilder: (context, error, stackTrace) =>
-                                      Center(
+                                      const Center(
                                           child: Text(
                                     'conuld \n not loaded ',
                                     style: TextStyle(

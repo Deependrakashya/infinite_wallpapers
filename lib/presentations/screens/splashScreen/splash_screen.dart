@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                       'assets/onboarding/logo_for_infinite_wallpaper_app.png',
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 margin: EdgeInsets.only(
                     // left: MediaQuery.of(context).size.width * .35,
                     top: MediaQuery.of(context).size.height * .16),
-                child: Text(
+                child: const Text(
                   ' Infinite wallpapers',
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ))),

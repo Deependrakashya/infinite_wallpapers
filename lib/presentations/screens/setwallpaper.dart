@@ -22,7 +22,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
             ),
             child: Image.network(
@@ -38,7 +38,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
               child: Container(
                 width: 40,
                 height: 40,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(45)),
                   gradient:
                       LinearGradient(colors: [Colors.yellow, Colors.black]),
@@ -47,7 +47,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Icon(
+                    child: const Icon(
                       CupertinoIcons.back,
                       color: Colors.white,
                       size: 25,
@@ -62,7 +62,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                     child: Center(
                       child: Container(
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Colors.yellow, Colors.black],
                           ),
                           borderRadius: BorderRadius.circular(
@@ -73,7 +73,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                             downloadAndSetWallpaper(
                                 widget.imgUrl, widget.controller);
                           },
-                          child: Text(
+                          child: const Text(
                             'set Wallpaper',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -87,7 +87,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                     child: Container(
                       width: 300,
                       height: 200,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         gradient: LinearGradient(
                             colors: [Colors.yellow, Colors.black]),
@@ -96,15 +96,15 @@ class _SetwallpaperState extends State<Setwallpaper> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Hold on Dude !! \n Saving Image',
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 20),
+                            margin: const EdgeInsets.only(top: 20),
                             child: Text(
                               widget.controller.downloadedData.value.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
                               ),
@@ -121,11 +121,11 @@ class _SetwallpaperState extends State<Setwallpaper> {
                 ? Positioned(
                     bottom: 5,
                     child: Container(
-                        margin: EdgeInsets.all(20),
-                        padding: EdgeInsets.all(10),
+                        margin: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(10),
                         width: MediaQuery.of(context).size.width * .9,
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(154, 153, 153, 0.494),
+                            color: const Color.fromRGBO(154, 153, 153, 0.494),
                             borderRadius: BorderRadius.circular(10)),
                         child: Obx(() {
                           return Center(
@@ -149,7 +149,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                                         ),
                                       ],
                                     )
-                                  : CircularProgressIndicator(
+                                  : const CircularProgressIndicator(
                                       semanticsLabel: 'Hold on Working in it',
                                       color: Colors.yellow,
                                     ));

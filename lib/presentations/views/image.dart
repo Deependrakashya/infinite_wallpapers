@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:infinite_wallpapers/getx.dart';
-import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
 
 SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
   TextEditingController textEditingController = TextEditingController();
@@ -28,13 +27,13 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
                       color: Colors.white,
                     ),
                     cursorColor: Colors.yellow,
-                    cursorRadius: Radius.circular(10),
+                    cursorRadius: const Radius.circular(10),
                     cursorWidth: 1,
                     cursorHeight: 14,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 20),
                       hintText: 'Search Here?',
-                      hintStyle: TextStyle(color: Colors.white),
+                      hintStyle: const TextStyle(color: Colors.white),
                       suffixIcon: IconButton(
                           padding: const EdgeInsets.all(5),
                           onPressed: () {
@@ -97,13 +96,13 @@ SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
                       color: Colors.white,
                     ),
                     cursorColor: Colors.yellow,
-                    cursorRadius: Radius.circular(10),
+                    cursorRadius: const Radius.circular(10),
                     cursorWidth: 1,
                     cursorHeight: 14,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 20),
                       hintText: 'Search Here?',
-                      hintStyle: TextStyle(color: Colors.white),
+                      hintStyle: const TextStyle(color: Colors.white),
                       suffixIcon: IconButton(
                           padding: const EdgeInsets.all(5),
                           onPressed: () {
@@ -144,7 +143,7 @@ Widget image(String url, int index, BuildContext context) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(5),
-      gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
+      gradient: const LinearGradient(colors: [Colors.yellow, Colors.black]),
     ),
     child: Image.network(
       url,

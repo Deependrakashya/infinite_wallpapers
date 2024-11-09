@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new, prefer_collection_literals
+
 class Wallhaven {
   List<Data>? data;
   Meta? meta;

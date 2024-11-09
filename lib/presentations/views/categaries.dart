@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:infinite_wallpapers/const.dart';
+
 import 'package:infinite_wallpapers/getx.dart';
 
 Widget categories(
@@ -17,7 +17,7 @@ Widget categories(
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.only(left: 40, right: 40),
       decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
+        gradient: const LinearGradient(colors: [Colors.yellow, Colors.black]),
         image: DecorationImage(
           fit: BoxFit.cover, // Use cover to fill the container with the image
           image: AssetImage(imgUrl),
@@ -55,7 +55,7 @@ Widget animeCatagories(String title, MyController controller, String q) {
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.only(left: 40, right: 40),
       decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
+        gradient: const LinearGradient(colors: [Colors.yellow, Colors.black]),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(

@@ -97,7 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     return controller.isLoading.value
                         ? const Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: CircularProgressIndicator(),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                              color: Colors.yellow,
+                            )),
                           )
                         : Container();
                   })
