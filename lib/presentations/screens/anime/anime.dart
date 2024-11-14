@@ -24,6 +24,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
     controller.animescrollerController
         .addListener(controller.animeloadMorePhotos);
     controller.animefetchInitialPhotos();
+    controller.setWallpaperLoader.value = false;
   }
 
   bool searchTap = false;

@@ -146,6 +146,13 @@ Widget image(String url, int index, BuildContext context) {
       gradient: const LinearGradient(colors: [Colors.yellow, Colors.black]),
     ),
     child: Image.network(
+      errorBuilder: (context, error, stackTrace) => const Center(
+        child: Text(
+          textAlign: TextAlign.center,
+          'Oops ! \n something went wrong !',
+          style: TextStyle(color: Colors.white, fontSize: 22),
+        ),
+      ),
       url,
       fit: BoxFit.cover,
       height: double.infinity,

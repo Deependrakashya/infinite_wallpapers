@@ -21,15 +21,28 @@ class _SetwallpaperState extends State<Setwallpaper> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
-            ),
-            child: Image.network(
+          Hero(
+            transitionOnUserGestures: true,
+            tag: 'animation',
+            child: Container(
               height: double.infinity,
               width: double.infinity,
-              widget.imgUrl,
-              fit: BoxFit.cover,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
+              ),
+              child: Image.network(
+                errorBuilder: (context, error, stackTrace) => Center(
+                  child: const Text(
+                    textAlign: TextAlign.center,
+                    'Oops ! \n something went wrong !',
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                ),
+                height: double.infinity,
+                width: double.infinity,
+                widget.imgUrl,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Positioned(
@@ -46,6 +59,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                 child: MaterialButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      controller.setWallpaperLoader.value = false;
                     },
                     child: const Icon(
                       CupertinoIcons.back,

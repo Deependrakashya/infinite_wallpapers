@@ -80,13 +80,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          child: Container(
-                            padding: const EdgeInsets.only(left: 2, right: 2),
-                            decoration: const BoxDecoration(),
-                            child: image(
-                              controller.allPhotos[index].src!.large.toString(),
-                              index,
-                              context,
+                          child: Hero(
+                            transitionOnUserGestures: true,
+                            tag: 'animation',
+                            child: Container(
+                              padding: const EdgeInsets.only(left: 2, right: 2),
+                              decoration: const BoxDecoration(),
+                              child: image(
+                                controller.allPhotos[index].src!.large
+                                    .toString(),
+                                index,
+                                context,
+                              ),
                             ),
                           ),
                         );
