@@ -33,7 +33,7 @@ class _HomePageState extends State<BottomNaviagtion> {
         bottomNavigationBar: Container(
           padding: const EdgeInsets.only(left: 39, right: 39),
           decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 67, 1, 99),
+              color: const Color.fromARGB(255, 208, 208, 208),
               boxShadow: [
                 BoxShadow(
                   blurRadius: 30,

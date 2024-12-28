@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_wallpapers/presentations/screens/splashScreen/splash_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -18,12 +21,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.lobsterTextTheme(),
-        scaffoldBackgroundColor: Color.fromRGBO(58, 58, 82, 1),
+        scaffoldBackgroundColor: Colors.white,
         primaryTextTheme: TextTheme(
             displayMedium: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
         )),
-        colorSchemeSeed: const Color.fromARGB(255, 38, 1, 57),
+        colorSchemeSeed: const Color.fromARGB(255, 83, 52, 99),
         useMaterial3: true,
       ),
       home: const SplashScreen(),

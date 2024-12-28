@@ -16,33 +16,30 @@ class Setwallpaper extends StatefulWidget {
 }
 
 class _SetwallpaperState extends State<Setwallpaper> {
+  bool setwallpaperbutton = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Hero(
-            transitionOnUserGestures: true,
-            tag: 'animation',
-            child: Container(
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
+            ),
+            child: Image.network(
+              errorBuilder: (context, error, stackTrace) => Center(
+                child: const Text(
+                  textAlign: TextAlign.center,
+                  'Oops ! \n something went wrong !',
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
+              ),
               height: double.infinity,
               width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
-              ),
-              child: Image.network(
-                errorBuilder: (context, error, stackTrace) => Center(
-                  child: const Text(
-                    textAlign: TextAlign.center,
-                    'Oops ! \n something went wrong !',
-                    style: TextStyle(color: Colors.white, fontSize: 22),
-                  ),
-                ),
-                height: double.infinity,
-                width: double.infinity,
-                widget.imgUrl,
-                fit: BoxFit.cover,
-              ),
+              widget.imgUrl,
+              fit: BoxFit.cover,
             ),
           ),
           Positioned(
@@ -59,7 +56,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                 child: MaterialButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      controller.setWallpaperLoader.value = false;
+                      // controller.setWallpaperLoader.value = false;
                     },
                     child: const Icon(
                       CupertinoIcons.back,
@@ -131,6 +128,8 @@ class _SetwallpaperState extends State<Setwallpaper> {
                 : const SizedBox();
           }),
           Obx(() {
+            print('wallpaper downling  done ' +
+                controller.downloadingDone.value.toString());
             return widget.controller.downloadingDone.value
                 ? Positioned(
                     bottom: 5,
@@ -142,30 +141,60 @@ class _SetwallpaperState extends State<Setwallpaper> {
                             color: const Color.fromRGBO(154, 153, 153, 0.494),
                             borderRadius: BorderRadius.circular(10)),
                         child: Obx(() {
+                          print(' set wallpaper  ' +
+                              controller.setWallpaperLoader.value.toString());
+
                           return Center(
-                              child: controller.setWallpaperLoader.value
+                              child: setwallpaperbutton
                                   ? Column(
                                       children: [
                                         InkWell(
-                                          onTap: () => setHomeScreen(),
+                                          onTap: () {
+                                            setHomeScreen();
+                                            setState(() {
+                                              setwallpaperbutton = false;
+                                            });
+                                          },
                                           child: customButton(widget.controller,
                                               'set as Home Screen'),
                                         ),
                                         InkWell(
-                                          onTap: () => setLockScreen(),
+                                          onTap: () {
+                                            setLockScreen();
+                                            setState(() {
+                                              setwallpaperbutton = false;
+                                            });
+                                          },
                                           child: customButton(widget.controller,
                                               'set as Lock Screen'),
                                         ),
                                         InkWell(
-                                          onTap: () => setBothScreen(),
+                                          onTap: () {
+                                            setBothScreen();
+                                            setState(() {
+                                              setwallpaperbutton = false;
+                                            });
+                                          },
                                           child: customButton(widget.controller,
                                               'set as Both Screen'),
                                         ),
                                       ],
                                     )
-                                  : const CircularProgressIndicator(
-                                      semanticsLabel: 'Hold on Working in it',
-                                      color: Colors.yellow,
+                                  : Column(
+                                      children: [
+                                        Center(
+                                          child: Text(
+                                            'Hold on it may take few seconds',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        const CircularProgressIndicator(
+                                          color: Colors.yellow,
+                                        ),
+                                      ],
                                     ));
                         })),
                   )
@@ -178,9 +207,9 @@ class _SetwallpaperState extends State<Setwallpaper> {
 
   @override
   void dispose() {
-    super.dispose();
-    widget.controller.downloading;
+    widget.controller.downloading.value = false;
     widget.controller.downloadingDone.value = false;
     widget.controller.setWallpaperLoader.value = false;
+    super.dispose();
   }
 }

@@ -7,7 +7,7 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
   return SliverAppBar(
     title: const Text(
       'infinite wallpapers',
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
     ),
     expandedHeight: 60.0,
     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -33,7 +33,7 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 20),
                       hintText: 'Search Here?',
-                      hintStyle: const TextStyle(color: Colors.white),
+                      hintStyle: const TextStyle(color: Colors.black),
                       suffixIcon: IconButton(
                           padding: const EdgeInsets.all(5),
                           onPressed: () {
@@ -41,18 +41,18 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
                           },
                           icon: const Icon(
                             Icons.cancel,
-                            color: Colors.yellow,
+                            color: Colors.black,
                             size: 20,
                           )),
                       border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          borderSide: BorderSide(color: Colors.yellow)),
+                          borderSide: BorderSide(color: Colors.black)),
                       enabledBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          borderSide: BorderSide(color: Colors.yellow)),
+                          borderSide: BorderSide(color: Colors.black)),
                       focusedBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          borderSide: BorderSide(color: Colors.yellow)),
+                          borderSide: BorderSide(color: Colors.black)),
                     ),
                   )),
             )
@@ -63,7 +63,7 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
                   },
                   icon: const Icon(
                     Icons.search,
-                    color: Colors.yellow,
+                    color: Colors.black,
                   ))))
     ],
   );
@@ -76,7 +76,7 @@ SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
   return SliverAppBar(
     title: const Text(
       'anime wallpapers',
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.black),
     ),
     expandedHeight: 60.0,
     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -93,16 +93,16 @@ SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
                         .searchAnimePhotos(textEditingController.text),
                     style: const TextStyle(
                       fontSize: 14,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
-                    cursorColor: Colors.yellow,
+                    cursorColor: Colors.black,
                     cursorRadius: const Radius.circular(10),
                     cursorWidth: 1,
                     cursorHeight: 14,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 20),
                       hintText: 'Search Here?',
-                      hintStyle: const TextStyle(color: Colors.white),
+                      hintStyle: const TextStyle(color: Colors.black),
                       suffixIcon: IconButton(
                           padding: const EdgeInsets.all(5),
                           onPressed: () {
@@ -111,18 +111,18 @@ SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
                           },
                           icon: const Icon(
                             Icons.cancel,
-                            color: Colors.yellow,
+                            color: Colors.black,
                             size: 20,
                           )),
                       border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          borderSide: BorderSide(color: Colors.yellow)),
+                          borderSide: BorderSide(color: Colors.black)),
                       enabledBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          borderSide: BorderSide(color: Colors.yellow)),
+                          borderSide: BorderSide(color: Colors.black)),
                       focusedBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          borderSide: BorderSide(color: Colors.yellow)),
+                          borderSide: BorderSide(color: Colors.black)),
                     ),
                   )),
             )
@@ -133,7 +133,7 @@ SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
                   },
                   icon: const Icon(
                     Icons.search,
-                    color: Colors.yellow,
+                    color: Colors.black,
                   ))))
     ],
   );

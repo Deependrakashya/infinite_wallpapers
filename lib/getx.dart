@@ -1,16 +1,22 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_wallpapers/model/ApiCall/clustured_api.dart';
 import 'package:infinite_wallpapers/model/ApiCall/wallhavenapi.dart';
 import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class MyController extends GetxController {
   ScrollController scrollController = ScrollController();
   ScrollController animescrollerController = ScrollController();
   TextEditingController textEditingController = TextEditingController();
+  late final StreamSubscription<InternetStatus> _subscription;
 
   RxBool getTouch = false.obs;
   RxBool isLoading = false.obs;
+  RxBool disconnected = false.obs;
   RxBool animePageisLoading = false.obs;
   RxBool downloadingDone = false.obs;
   RxList allPhotos = [].obs;
@@ -19,9 +25,34 @@ class MyController extends GetxController {
   RxString catagoriesSearch = ''.obs;
   RxBool categoriesTapped = false.obs;
   RxList animePhotos = [].obs;
-  RxBool setWallpaperLoader = true.obs;
+  RxBool setWallpaperLoader = false.obs;
 
   int page = 1;
+  // check internet connection
+  void checkInternet() async {
+    log('check intenet');
+
+    bool result = await InternetConnection().hasInternetAccess;
+
+    final listener =
+        InternetConnection().onStatusChange.listen((InternetStatus status) {
+      switch (status) {
+        case InternetStatus.connected:
+          // The internet is now connected
+          log('sconnected');
+          disconnected.value = false;
+
+          break;
+        case InternetStatus.disconnected:
+          // The internet is now disconnected
+          log('disconnected');
+          disconnected.value = true;
+
+          break;
+      }
+    });
+  }
+
   void toggleSearchBar() {
     if (getTouch.value) {
       getTouch.value = false;

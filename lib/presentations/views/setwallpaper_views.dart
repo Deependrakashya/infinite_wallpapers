@@ -7,7 +7,7 @@ Widget customButton(MyController controller, String title) {
     margin: const EdgeInsets.only(top: 5),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(30),
-      gradient: controller.setWallpaperLoader.value
+      gradient: controller.downloadingDone.value
           ? const LinearGradient(colors: [Colors.yellow, Colors.black])
           : const LinearGradient(colors: [Colors.grey, Colors.grey]),
     ),
