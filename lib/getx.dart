@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_wallpapers/model/ApiCall/clustured_api.dart';
-import 'package:infinite_wallpapers/model/ApiCall/wallhavenapi.dart';
-import 'package:infinite_wallpapers/model/clusturedImages/clusturedImages.dart';
+import 'package:zen_walls/viewmodel/ApiCall/clustured_api.dart';
+import 'package:zen_walls/viewmodel/ApiCall/wallhavenapi.dart';
+import 'package:zen_walls/model/clusturedImages/clusturedImages.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class MyController extends GetxController {
@@ -66,6 +66,7 @@ class MyController extends GetxController {
 // function for fetching data
   Future<void> fetchInitialPhotos() async {
     isLoading.value = true; // Set loading flag
+    log("fetching photos ");
     try {
       ClusturedPhotos data = await ClusturedPhotosApiCall(page.toString());
       if (data.photos != null) {

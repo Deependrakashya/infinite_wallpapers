@@ -1,15 +1,13 @@
 import 'dart:developer';
-
 import 'package:get/get.dart';
-import 'package:infinite_wallpapers/getx.dart';
 import 'package:wallpaper/wallpaper.dart';
+import 'package:zen_walls/getx.dart';
 
 final MyController controller = Get.put(MyController());
-
 Future<void> downloadAndSetWallpaper(
     String imgUrl, MyController controller) async {
   controller.downloading.value = true;
-  var progress = await Wallpaper.imageDownloadProgress(imgUrl,
+  var progress = Wallpaper.imageDownloadProgress(imgUrl,
       location: DownloadLocation.externalDirectory);
   progress.listen((onData) {
     controller.downloadedData.value = onData;

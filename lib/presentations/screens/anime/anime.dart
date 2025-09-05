@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_wallpapers/const.dart';
-import 'package:infinite_wallpapers/getx.dart';
+import 'package:zen_walls/services/const.dart';
+import 'package:zen_walls/getx.dart';
 
-import 'package:infinite_wallpapers/presentations/screens/setwallpaper.dart';
-import 'package:infinite_wallpapers/presentations/views/categaries.dart';
+import 'package:zen_walls/presentations/screens/setwallpaper.dart';
+import 'package:zen_walls/presentations/views/categaries.dart';
 
-import 'package:infinite_wallpapers/presentations/views/image.dart';
+import 'package:zen_walls/presentations/views/image.dart';
 
 class AnimeScreen extends StatefulWidget {
   const AnimeScreen({super.key});
@@ -124,11 +124,11 @@ class _AnimeScreenState extends State<AnimeScreen> {
                       return !controller.animePageisLoading.value ||
                               controller.animePhotos.length < 1
                           ? Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
                               child: GridView.builder(
                                 itemCount: 20,
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 1,
                                   childAspectRatio: 0.4,
@@ -137,7 +137,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   return Container(
-                                    margin: EdgeInsets.symmetric(
+                                    margin: const EdgeInsets.symmetric(
                                         horizontal: 2, vertical: 2),
                                     color: const Color.fromARGB(
                                         255, 227, 226, 226),

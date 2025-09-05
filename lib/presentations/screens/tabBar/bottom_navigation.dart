@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:infinite_wallpapers/presentations/screens/anime/anime.dart';
-import 'package:infinite_wallpapers/presentations/screens/homeScreen/home_screen.dart';
+import 'package:zen_walls/presentations/screens/anime/anime.dart';
+import 'package:zen_walls/presentations/screens/homeScreen/home_screen.dart';
 
 class BottomNaviagtion extends StatefulWidget {
   const BottomNaviagtion({super.key});
@@ -32,14 +32,12 @@ class _HomePageState extends State<BottomNaviagtion> {
         // Bottom navigation bar
         bottomNavigationBar: Container(
           padding: const EdgeInsets.only(left: 39, right: 39),
-          decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 208, 208, 208),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 30,
-                  color: Colors.black.withOpacity(0.1),
-                )
-              ]),
+          decoration: BoxDecoration(color: Colors.black, boxShadow: [
+            BoxShadow(
+              blurRadius: 30,
+              color: Colors.black.withOpacity(0.1),
+            )
+          ]),
           child: SafeArea(
               child: Padding(
             padding: const EdgeInsets.all(8),

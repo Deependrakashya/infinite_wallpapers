@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:infinite_wallpapers/presentations/screens/tabBar/bottom_navigation.dart';
+import 'package:zen_walls/presentations/screens/tabBar/bottom_navigation.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,20 +22,6 @@ class _SplashScreenState extends State<SplashScreen> {
   late final AppLifecycleListener _listener;
   @override
   void initState() {
-    _subscription = InternetConnection().onStatusChange.listen((status) {
-      // Handle internet status changes
-      if (status.toString() == 'InternetStatus.disconnected') {
-        setState(() {
-          disconnected = true;
-        });
-      } else if (status.toString() == 'InternetStatus.connected') {
-        setState(() {
-          disconnected = false;
-          redirect();
-        });
-      }
-      log(status.toString());
-    });
     _listener = AppLifecycleListener(
       onResume: _subscription.resume,
       onHide: _subscription.pause,
@@ -71,33 +57,6 @@ class _SplashScreenState extends State<SplashScreen> {
                       style: TextStyle(fontSize: 24, color: Colors.white),
                     ))),
           ),
-          disconnected
-              ? Positioned(
-                  bottom: 20,
-                  child: Dialog(
-                    backgroundColor: const Color.fromARGB(255, 160, 150, 150)
-                        .withOpacity(0.6),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(
-                            color: Colors.red,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Turn on Internet !!',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              : Container()
         ],
       ),
     );

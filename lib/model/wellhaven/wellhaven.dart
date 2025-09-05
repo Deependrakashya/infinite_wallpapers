@@ -21,8 +21,8 @@ class Wallhaven {
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
+    if (meta != null) {
+      data['meta'] = meta!.toJson();
     }
     return data;
   }
@@ -92,25 +92,25 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['url'] = this.url;
-    data['short_url'] = this.shortUrl;
-    data['views'] = this.views;
-    data['favorites'] = this.favorites;
-    data['source'] = this.source;
-    data['purity'] = this.purity;
-    data['category'] = this.category;
-    data['dimension_x'] = this.dimensionX;
-    data['dimension_y'] = this.dimensionY;
-    data['resolution'] = this.resolution;
-    data['ratio'] = this.ratio;
-    data['file_size'] = this.fileSize;
-    data['file_type'] = this.fileType;
-    data['created_at'] = this.createdAt;
-    data['colors'] = this.colors;
-    data['path'] = this.path;
-    if (this.thumbs != null) {
-      data['thumbs'] = this.thumbs!.toJson();
+    data['id'] = id;
+    data['url'] = url;
+    data['short_url'] = shortUrl;
+    data['views'] = views;
+    data['favorites'] = favorites;
+    data['source'] = source;
+    data['purity'] = purity;
+    data['category'] = category;
+    data['dimension_x'] = dimensionX;
+    data['dimension_y'] = dimensionY;
+    data['resolution'] = resolution;
+    data['ratio'] = ratio;
+    data['file_size'] = fileSize;
+    data['file_type'] = fileType;
+    data['created_at'] = createdAt;
+    data['colors'] = colors;
+    data['path'] = path;
+    if (thumbs != null) {
+      data['thumbs'] = thumbs!.toJson();
     }
     return data;
   }
@@ -131,9 +131,9 @@ class Thumbs {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['large'] = this.large;
-    data['original'] = this.original;
-    data['small'] = this.small;
+    data['large'] = large;
+    data['original'] = original;
+    data['small'] = small;
     return data;
   }
 }
@@ -178,12 +178,12 @@ class Meta {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['current_page'] = this.currentPage;
-    data['last_page'] = this.lastPage;
-    data['per_page'] = this.perPage;
-    data['total'] = this.total;
-    data['query'] = this.query;
-    data['seed'] = this.seed;
+    data['current_page'] = currentPage;
+    data['last_page'] = lastPage;
+    data['per_page'] = perPage;
+    data['total'] = total;
+    data['query'] = query;
+    data['seed'] = seed;
     return data;
   }
 }

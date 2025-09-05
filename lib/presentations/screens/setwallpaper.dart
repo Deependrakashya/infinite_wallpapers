@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infinite_wallpapers/getx.dart';
+import 'package:zen_walls/getx.dart';
 
-import 'package:infinite_wallpapers/presentations/views/setwallpaper_views.dart';
-import 'package:infinite_wallpapers/setwallpaper_handler.dart';
+import 'package:zen_walls/presentations/views/setwallpaper_views.dart';
+import 'package:zen_walls/services/setwallpaper_handler.dart';
 import 'package:get/get.dart';
 
 class Setwallpaper extends StatefulWidget {
@@ -29,8 +29,8 @@ class _SetwallpaperState extends State<Setwallpaper> {
               gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
             ),
             child: Image.network(
-              errorBuilder: (context, error, stackTrace) => Center(
-                child: const Text(
+              errorBuilder: (context, error, stackTrace) => const Center(
+                child: Text(
                   textAlign: TextAlign.center,
                   'Oops ! \n something went wrong !',
                   style: TextStyle(color: Colors.white, fontSize: 22),
@@ -128,8 +128,8 @@ class _SetwallpaperState extends State<Setwallpaper> {
                 : const SizedBox();
           }),
           Obx(() {
-            print('wallpaper downling  done ' +
-                controller.downloadingDone.value.toString());
+            print(
+                'wallpaper downling  done ${controller.downloadingDone.value}');
             return widget.controller.downloadingDone.value
                 ? Positioned(
                     bottom: 5,
@@ -141,8 +141,8 @@ class _SetwallpaperState extends State<Setwallpaper> {
                             color: const Color.fromRGBO(154, 153, 153, 0.494),
                             borderRadius: BorderRadius.circular(10)),
                         child: Obx(() {
-                          print(' set wallpaper  ' +
-                              controller.setWallpaperLoader.value.toString());
+                          print(
+                              ' set wallpaper  ${controller.setWallpaperLoader.value}');
 
                           return Center(
                               child: setwallpaperbutton
@@ -180,7 +180,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                                         ),
                                       ],
                                     )
-                                  : Column(
+                                  : const Column(
                                       children: [
                                         Center(
                                           child: Text(
@@ -191,7 +191,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
                                         SizedBox(
                                           height: 20,
                                         ),
-                                        const CircularProgressIndicator(
+                                        CircularProgressIndicator(
                                           color: Colors.yellow,
                                         ),
                                       ],

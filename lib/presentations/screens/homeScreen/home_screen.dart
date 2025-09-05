@@ -4,13 +4,14 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_wallpapers/const.dart';
-import 'package:infinite_wallpapers/getx.dart';
-import 'package:infinite_wallpapers/presentations/screens/setwallpaper.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:zen_walls/services/const.dart';
+import 'package:zen_walls/getx.dart';
+import 'package:zen_walls/presentations/screens/setwallpaper.dart';
 
-import 'package:infinite_wallpapers/presentations/views/categaries.dart';
+import 'package:zen_walls/presentations/views/categaries.dart';
 
-import 'package:infinite_wallpapers/presentations/views/image.dart';
+import 'package:zen_walls/presentations/views/image.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,21 +21,27 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  MyController controller = MyController();
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
+  final MyController controller = Get.put(MyController(), permanent: true);
 
   @override
   void initState() {
     super.initState();
     controller.checkInternet();
     controller.scrollController.addListener(controller.loadMorePhotos);
-    controller.fetchInitialPhotos(); // Fetch initial photos
+    if (controller.allPhotos.isEmpty) {
+      controller.fetchInitialPhotos(); // Fetch initial photos
+    }
   }
 
+  @override
+  bool get wantKeepAlive => true;
   var categorieslist = StaticImagesCategories().catagories;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -64,136 +71,124 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Obx(() {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 1,
-                              childAspectRatio: 0.5,
-                              mainAxisSpacing: 4,
-                            ),
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.allPhotos.length ??= 10,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () => Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => Setwallpaper(
-                                      imgUrl: controller
-                                          .allPhotos[index].src!.original
-                                          .toString(),
-                                      controller: controller,
-                                    ),
-                                  ),
-                                ),
-                                child: Container(
-                                  padding:
-                                      const EdgeInsets.only(left: 2, right: 2),
-                                  decoration: const BoxDecoration(),
-                                  child: image(
-                                    controller.allPhotos[index].src!.large
-                                        .toString(),
-                                    index,
-                                    context,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      }),
-                      Obx(() {
-                        return !controller.isLoading.value ||
-                                controller.allPhotos.length < 1
+                        return controller.isLoading.value
                             ? Container(
-                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5),
                                 child: GridView.builder(
-                                  itemCount: 20,
                                   gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 1,
-                                    childAspectRatio: 0.4,
+                                    childAspectRatio: 0.5,
+                                    mainAxisSpacing: 4,
                                   ),
-                                  physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: 10,
                                   itemBuilder: (context, index) {
                                     return Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 2, vertical: 2),
-                                      color: const Color.fromARGB(
-                                          255, 227, 226, 226),
+                                      margin: const EdgeInsets.all(2),
+                                      child: Shimmer(
+                                        duration: const Duration(
+                                            seconds:
+                                                2), // smoother, noticeable animation
+                                        interval: const Duration(
+                                            milliseconds:
+                                                500), // time between shimmer cycles
+                                        color: Colors.white,
+                                        colorOpacity: 0.4,
+                                        enabled: true,
+                                        direction:
+                                            ShimmerDirection.fromLeftToRight(),
+                                        child: Container(
+                                          height:
+                                              150, // give some height to see the shimmer
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 88, 88, 90),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                        ),
+                                      ),
                                     );
                                   },
                                 ),
                               )
-                            : Container();
+                            : Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 4,
+                                    childAspectRatio: 0.5,
+                                    mainAxisSpacing: 8,
+                                  ),
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: controller.allPhotos.length,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => Setwallpaper(
+                                            imgUrl: controller
+                                                .allPhotos[index].src!.original
+                                                .toString(),
+                                            controller: controller,
+                                          ),
+                                        ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 2),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(
+                                                    0.4), // shadow color
+                                                spreadRadius: 2,
+                                                blurRadius: 8,
+                                                offset: const Offset(
+                                                    4, 4), // x, y offset
+                                              ),
+                                              BoxShadow(
+                                                color: Colors.white.withOpacity(
+                                                    0.1), // subtle highlight for 3D
+                                                spreadRadius: 1,
+                                                blurRadius: 4,
+                                                offset: const Offset(-2, -2),
+                                              ),
+                                            ],
+                                          ),
+                                          child: image(
+                                            controller
+                                                .allPhotos[index].src!.large
+                                                .toString(),
+                                            index,
+                                            context,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
                       }),
-
-                      // disconnected
-                      //     ? Dialog(
-                      //         child: Container(
-                      //           height: 200,
-                      //           width: 200,
-                      //           color: Colors.red,
-                      //           child: Center(
-                      //             child: Text('please turn on internet'),
-                      //           ),
-                      //         ),
-                      //       )
-                      //     : Container()
                     ],
                   ),
                 ),
               ],
             ),
-            // Obx(() {
-            //   return controller.disconnected.value
-            //       ? Container(
-            //           color: const Color.fromARGB(255, 30, 29, 29)
-            //               .withOpacity(0.7),
-            //           height: MediaQuery.of(context).size.height * 1,
-            //           width: MediaQuery.of(context).size.width * 1,
-            //           child: Center(
-            //             child: Container(
-            //               height: 200,
-            //               width: 200,
-            //               decoration: BoxDecoration(
-            //                   color: Colors.red,
-            //                   borderRadius: BorderRadius.circular(20)),
-            //               child: Column(
-            //                 children: [
-            //                   Container(
-            //                     margin: EdgeInsets.only(top: 20),
-            //                     child: Center(
-            //                       child: Text(
-            //                         "Please turn on \n internet",
-            //                         textAlign: TextAlign.center,
-            //                         style: TextStyle(
-            //                             color: Colors.white, fontSize: 20),
-            //                       ),
-            //                     ),
-            //                   ),
-            //                   SizedBox(
-            //                     height: 20,
-            //                   ),
-            //                   CircularProgressIndicator(
-            //                     color: Colors.yellow,
-            //                   )
-            //                 ],
-            //               ),
-            //             ),
-            //           ),
-            //         )
-            //       : Container(
-            //           width: 0,
-            //           height: 0,
-            //         );
-            // })
           ],
         ),
       ),

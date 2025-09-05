@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_wallpapers/getx.dart';
+import 'package:zen_walls/getx.dart';
 
 Widget customButton(MyController controller, String title) {
   return Container(
@@ -11,7 +11,7 @@ Widget customButton(MyController controller, String title) {
           ? const LinearGradient(colors: [Colors.yellow, Colors.black])
           : const LinearGradient(colors: [Colors.grey, Colors.grey]),
     ),
-    child: Container(
+    child: SizedBox(
       height: 30,
       child: Center(
         child: Text(

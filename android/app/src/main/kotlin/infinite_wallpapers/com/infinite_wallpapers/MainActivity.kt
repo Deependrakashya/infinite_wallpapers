@@ -1,4 +1,4 @@
-package com.deependra.infinite_wallpapers
+package com.devquorix.zenwalls
 
 import io.flutter.embedding.android.FlutterActivity
 

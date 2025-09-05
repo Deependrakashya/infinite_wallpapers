@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:infinite_wallpapers/getx.dart';
+import 'package:zen_walls/getx.dart';
 
 Widget categories(
   String title,
