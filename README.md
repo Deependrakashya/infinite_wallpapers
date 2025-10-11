@@ -1,6 +1,8 @@
 
 # Infinite Wallpapers
 
+[image](https://raw.githubusercontent.com/Deependrakashya/infinite_wallpapers/refs/heads/main/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+
 Infinite Wallpapers is a sleek and user-friendly wallpaper app built with **Flutter**. It offers a vast collection of high-quality wallpapers, with special categories for **Anime** fans and more, all sourced from the internet and organized for easy browsing. 
 
 ### Features
