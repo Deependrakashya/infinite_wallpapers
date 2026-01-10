@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:zen_walls/viewmodel/ApiCall/clustured_api.dart';
 import 'package:zen_walls/viewmodel/ApiCall/wallhavenapi.dart';
@@ -24,6 +25,7 @@ class MyController extends GetxController {
   RxString downloadedData = ''.obs;
   RxString catagoriesSearch = ''.obs;
   RxBool categoriesTapped = false.obs;
+  RxBool isBarsVisible = true.obs;
   RxList animePhotos = [].obs;
   RxBool setWallpaperLoader = false.obs;
 
@@ -61,6 +63,14 @@ class MyController extends GetxController {
       searchAnimePhotos('anime');
     } else {
       getTouch.value = true;
+    }
+  }
+
+  void updateScrollDirection(ScrollDirection direction) {
+    if (direction == ScrollDirection.forward) {
+      isBarsVisible.value = true;
+    } else if (direction == ScrollDirection.reverse) {
+      isBarsVisible.value = false;
     }
   }
 

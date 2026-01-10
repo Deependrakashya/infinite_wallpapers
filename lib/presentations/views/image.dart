@@ -12,6 +12,8 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
       'infinite wallpapers',
       style: TextStyle(color: Colors.white),
     ),
+    floating: true,
+    snap: true,
     expandedHeight: 60.0,
     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     actions: [
@@ -84,6 +86,8 @@ SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
       'anime wallpapers',
       style: TextStyle(color: Colors.white),
     ),
+    floating: true,
+    snap: true,
     expandedHeight: 60.0,
     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     actions: [

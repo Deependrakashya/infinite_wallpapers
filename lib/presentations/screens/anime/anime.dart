@@ -19,7 +19,7 @@ class AnimeScreen extends StatefulWidget {
 
 class _AnimeScreenState extends State<AnimeScreen>
     with AutomaticKeepAliveClientMixin {
-  final MyController controller = Get.put(MyController());
+  final MyController controller = Get.find<MyController>();
   var categorieslist = StaticImagesCategories().animeCatagories;
   @override
   void initState() {
@@ -27,6 +27,10 @@ class _AnimeScreenState extends State<AnimeScreen>
     controller.checkInternet();
     controller.animescrollerController
         .addListener(controller.animeloadMorePhotos);
+    controller.animescrollerController.addListener(() {
+      controller.updateScrollDirection(
+          controller.animescrollerController.position.userScrollDirection);
+    });
     if (controller.animePhotos.isEmpty) {
       controller.animefetchInitialPhotos();
     }
@@ -56,10 +60,18 @@ class _AnimeScreenState extends State<AnimeScreen>
                 context,
                 controller,
               ),
-              SliverToBoxAdapter(
-                  child: Column(
-                children: [
-                  SizedBox(
+              SliverAppBar(
+                pinned: false,
+                floating: true,
+                snap: true,
+                automaticallyImplyLeading: false,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                surfaceTintColor: Colors.transparent,
+                elevation: 0,
+                collapsedHeight: 60,
+                expandedHeight: 60,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: SizedBox(
                     height: 60,
                     child: ListView.builder(
                         shrinkWrap: true,
@@ -74,94 +86,96 @@ class _AnimeScreenState extends State<AnimeScreen>
                           );
                         }),
                   ),
-                  Obx(() {
-                    final theme = Theme.of(context);
-                    return controller.animePageisLoading.value &&
-                            controller.animePhotos.isEmpty
-                        ? Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 12,
-                                childAspectRatio: 0.6,
-                                mainAxisSpacing: 12,
-                              ),
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 6,
-                              itemBuilder: (context, index) {
-                                return Shimmer(
-                                  duration: const Duration(seconds: 2),
-                                  color: Colors.white,
-                                  colorOpacity: 0.1,
-                                  enabled: true,
-                                  direction: ShimmerDirection.fromLTRB(),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: theme.colorScheme.surface,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                );
-                              },
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Obx(() {
+                  final theme = Theme.of(context);
+                  return controller.animePageisLoading.value &&
+                          controller.animePhotos.isEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 12,
+                              childAspectRatio: 0.6,
+                              mainAxisSpacing: 12,
                             ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 12,
-                                childAspectRatio: 0.6,
-                                mainAxisSpacing: 12,
-                              ),
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: controller.animePhotos.length,
-                              itemBuilder: (context, index) {
-                                var wallpaper = controller.animePhotos[index];
-                                return InkWell(
-                                  onTap: () => Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (context) => Setwallpaper(
-                                        imgUrl: wallpaper.path.toString(),
-                                        controller: controller,
-                                      ),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 6,
+                            itemBuilder: (context, index) {
+                              return Shimmer(
+                                duration: const Duration(seconds: 2),
+                                color: Colors.white,
+                                colorOpacity: 0.1,
+                                enabled: true,
+                                direction: ShimmerDirection.fromLTRB(),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.surface,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 12,
+                              childAspectRatio: 0.6,
+                              mainAxisSpacing: 12,
+                            ),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller.animePhotos.length,
+                            itemBuilder: (context, index) {
+                              var wallpaper = controller.animePhotos[index];
+                              return InkWell(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => Setwallpaper(
+                                      imgUrl: wallpaper.path.toString(),
+                                      controller: controller,
                                     ),
                                   ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(
-                                            0.3,
-                                          ),
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 4),
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(
+                                          0.3,
                                         ),
-                                      ],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: image(
-                                        wallpaper.thumbs.original.toString(),
-                                        index,
-                                        context,
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
                                       ),
+                                    ],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: image(
+                                      wallpaper.thumbs.original.toString(),
+                                      index,
+                                      context,
                                     ),
                                   ),
-                                );
-                              },
-                            ),
-                          );
-                  }),
-                ],
-              )),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                }),
+              ),
               Obx(() {
                 return controller.animePageisLoading.value &&
                         controller.animePhotos.isNotEmpty

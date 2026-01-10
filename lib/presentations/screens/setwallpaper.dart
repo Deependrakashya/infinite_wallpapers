@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zen_walls/getx.dart';
@@ -30,10 +31,15 @@ class _SetwallpaperState extends State<Setwallpaper> {
         children: [
           // Background Image
           Positioned.fill(
-            child: Image.network(
-              widget.imgUrl,
+            child: CachedNetworkImage(
+              imageUrl: widget.imgUrl,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Center(
+              placeholder: (context, url) => Center(
+                child: CircularProgressIndicator(
+                  color: theme.colorScheme.primary,
+                ),
+              ),
+              errorWidget: (context, url, error) => Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -95,7 +101,7 @@ class _SetwallpaperState extends State<Setwallpaper> {
           Positioned(
             left: 20,
             right: 20,
-            bottom: 40,
+            bottom: 50,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -204,40 +210,44 @@ class _SetwallpaperState extends State<Setwallpaper> {
             ),
           ),
 
-          Positioned(
-            child: Obx(() {
-              if (!widget.controller.downloading.value) return const SizedBox();
-              return Center(
-                child: Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surface.withOpacity(0.9),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: theme.colorScheme.primary.withOpacity(0.2),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: 20),
-                      Text(
-                        'SAVING IMAGE...',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        widget.controller.downloadedData.value,
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }),
-          )
+          // Positioned(
+          //   top: MediaQuery.of(context).size.height * 0.5,
+          //   bottom: MediaQuery.of(context).size.height * 0.5,
+          //   left: MediaQuery.of(context).size.width * 0.5,
+          //   right: MediaQuery.of(context).size.width * 0.5,
+          //   child: Obx(() {
+          //     if (!widget.controller.downloading.value) return const SizedBox();
+          //     return Center(
+          //       child: Container(
+          //         padding: const EdgeInsets.all(24),
+          //         decoration: BoxDecoration(
+          //           color: theme.colorScheme.surface.withOpacity(0.9),
+          //           borderRadius: BorderRadius.circular(20),
+          //           border: Border.all(
+          //             color: theme.colorScheme.primary.withOpacity(0.2),
+          //           ),
+          //         ),
+          //         child: Column(
+          //           children: [
+          //             const CircularProgressIndicator(),
+          //             const SizedBox(height: 20),
+          //             Text(
+          //               'SAVING IMAGE...',
+          //               style: theme.textTheme.titleMedium?.copyWith(
+          //                 fontWeight: FontWeight.bold,
+          //               ),
+          //             ),
+          //             const SizedBox(height: 8),
+          //             Text(
+          //               widget.controller.downloadedData.value,
+          //               style: theme.textTheme.bodyMedium,
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     );
+          //   }),
+          // )
         ],
       ),
     );
