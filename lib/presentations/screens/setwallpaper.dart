@@ -138,37 +138,6 @@ class _SetwallpaperState extends State<Setwallpaper> {
                   );
                 }),
                 Obx(() {
-                  if (!widget.controller.downloading.value)
-                    return const SizedBox();
-                  return Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.surface.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: theme.colorScheme.primary.withOpacity(0.2),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        const CircularProgressIndicator(),
-                        const SizedBox(height: 20),
-                        Text(
-                          'SAVING IMAGE...',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          widget.controller.downloadedData.value,
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-                Obx(() {
                   if (!widget.controller.downloadingDone.value)
                     return const SizedBox();
                   return Container(
@@ -234,6 +203,41 @@ class _SetwallpaperState extends State<Setwallpaper> {
               ],
             ),
           ),
+
+          Positioned(
+            child: Obx(() {
+              if (!widget.controller.downloading.value) return const SizedBox();
+              return Center(
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.surface.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: theme.colorScheme.primary.withOpacity(0.2),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      const CircularProgressIndicator(),
+                      const SizedBox(height: 20),
+                      Text(
+                        'SAVING IMAGE...',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        widget.controller.downloadedData.value,
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+          )
         ],
       ),
     );

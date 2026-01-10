@@ -27,7 +27,8 @@ class MyController extends GetxController {
   RxList animePhotos = [].obs;
   RxBool setWallpaperLoader = false.obs;
 
-  int page = 1;
+  int pexelsPage = 1;
+  int animePage = 1;
   // check internet connection
   void checkInternet() async {
     log('check intenet');
@@ -66,13 +67,15 @@ class MyController extends GetxController {
 // function for fetching data
   Future<void> fetchInitialPhotos() async {
     isLoading.value = true; // Set loading flag
+    pexelsPage = 1;
     log("fetching photos ");
     try {
-      ClusturedPhotos data = await ClusturedPhotosApiCall(page.toString());
+      ClusturedPhotos data =
+          await ClusturedPhotosApiCall(pexelsPage.toString());
       if (data.photos != null) {
         allPhotos.replaceRange(
             0, allPhotos.length, data.photos!.toList()); // Add initial photos
-        page++; // Increment page for next load
+        pexelsPage++; // Increment page for next load
       }
     } catch (error) {
       // print('Error fetching initial photos: $error');
@@ -93,10 +96,11 @@ class MyController extends GetxController {
       isLoading.value = true; // Set loading flag
 // laoding more images for clustured or defult homescreen
       try {
-        ClusturedPhotos data = await ClusturedPhotosApiCall(page.toString());
+        ClusturedPhotos data =
+            await ClusturedPhotosApiCall(pexelsPage.toString());
         if (data.photos != null) {
           allPhotos.addAll(data.photos!); // Add photos from the response
-          page++; // Increment page for next load
+          pexelsPage++; // Increment page for next load
         }
       } catch (error) {
         // print('Error loading more photos: $error');
@@ -106,13 +110,15 @@ class MyController extends GetxController {
     }
     if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent &&
+        !isLoading.value &&
         categoriesTapped.value) {
+      isLoading.value = true;
       try {
         var data =
-            await serachPexelapi(catagoriesSearch.value, page.toString());
+            await serachPexelapi(catagoriesSearch.value, pexelsPage.toString());
         if (data.photos != null) {
           allPhotos.addAll(data.photos!); // Add photos from the response
-          page++; // Increment page for next load
+          pexelsPage++; // Increment page for next load
         }
       } catch (error) {
         // print('Error loading more photos: $error');
@@ -126,11 +132,12 @@ class MyController extends GetxController {
   void searchPexelsImages(String search) async {
     categoriesTapped.value = true;
     catagoriesSearch.value = search;
+    pexelsPage = 1;
     var data = await serachPexelapi(search, '1');
     if (data.photos != null) {
       allPhotos.replaceRange(0, allPhotos.length, data.photos!.toList());
 
-      page++; // Increment page for next load
+      pexelsPage++; // Increment page for next load
     }
   }
 
@@ -139,11 +146,12 @@ class MyController extends GetxController {
   Future<void> animefetchInitialPhotos() async {
     // print('anime wallheave initial api called');
     animePageisLoading.value = true; // Set loading flag
+    animePage = 1;
     try {
       var data = await WallheavenApiCall();
       if (data.data != null) {
-        animePhotos.addAll(data.data!.toList());
-        page++; // Increment page for next load
+        animePhotos.replaceRange(0, animePhotos.length, data.data!.toList());
+        animePage++; // Increment page for next load
       }
     } catch (error) {
       // print('Error fetching initial photos: $error');
@@ -156,61 +164,66 @@ class MyController extends GetxController {
     String search,
   ) async {
     animePageisLoading.value = true;
-    page = 2;
+    animePage = 1;
     try {
       var data = await WallheavenApiCall(
         search: search,
       );
       if (data.data != null) {
         animePhotos.replaceRange(0, animePhotos.length, data.data!.toList());
+        animePage++;
       }
     } catch (e) {
       // print('Error fetching initial photos: $e');
     } finally {
-      isLoading.value = false;
+      animePageisLoading.value = false;
     }
   }
 
   void animeloadMorePhotos() async {
     if (animescrollerController.position.pixels ==
             animescrollerController.position.maxScrollExtent &&
+        !animePageisLoading.value &&
         !getTouch.value) {
       // Check if not already loading
       // print('search bar is closed');
       // Set loading flag
+      animePageisLoading.value = true;
 // laoding more images for clustured or defult homescreen
       try {
-        // print(page.toString() + 'laoding more');
-        var data = await WallheavenApiCall(page: page.toString());
+        // print(animePage.toString() + 'laoding more');
+        var data = await WallheavenApiCall(page: animePage.toString());
 
         if (data.data != null) {
           animePhotos
               .addAll(data.data!.toList()); // Add photos from the response
-          // print('page $page');
-          page++; // Increment page for next load
+          // print('page $animePage');
+          animePage++; // Increment page for next load
         }
       } catch (error) {
         // print('Error loading more photos: $error');
       } finally {
-        isLoading.value = false; // Reset loading flag
+        animePageisLoading.value = false; // Reset loading flag
       }
     }
     if (animescrollerController.position.pixels ==
             animescrollerController.position.maxScrollExtent &&
+        !animePageisLoading.value &&
         getTouch.value) {
-      // print('search bar is open $page');
+      // print('search bar is open $animePage');
+      animePageisLoading.value = true;
       try {
         var data = await WallheavenApiCall(
-            search: textEditingController.text, page: page.toString());
+            search: textEditingController.text, page: animePage.toString());
         if (data.data != null) {
           animePhotos
               .addAll(data.data!.toList()); // Add photos from the response
-          page++; // Increment page for next load
+          animePage++; // Increment page for next load
         }
       } catch (error) {
         // print('Error loading more photos: $error');
       } finally {
-        isLoading.value = false; // Reset loading flag
+        animePageisLoading.value = false; // Reset loading flag
       }
     }
   }

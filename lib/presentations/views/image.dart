@@ -5,7 +5,8 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:zen_walls/getx.dart';
 
 SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
-  TextEditingController textEditingController = TextEditingController();
+  TextEditingController textEditingController =
+      controller.textEditingController;
   return SliverAppBar(
     title: const Text(
       'infinite wallpapers',
@@ -76,7 +77,6 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
 }
 
 SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
-  controller.page = 1;
   TextEditingController textEditingController =
       controller.textEditingController;
   return SliverAppBar(
@@ -112,7 +112,6 @@ SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
                         padding: const EdgeInsets.all(5),
                         onPressed: () {
                           controller.toggleSearchBar();
-                          controller.page = 0;
                         },
                         icon: const Icon(
                           Icons.cancel,
@@ -154,6 +153,10 @@ Widget image(String url, int index, BuildContext context) {
     imageUrl: url,
     fit: BoxFit.cover,
     height: double.infinity,
+    memCacheHeight: 600,
+    memCacheWidth: 400,
+    maxWidthDiskCache: 1200,
+    maxHeightDiskCache: 1800,
     placeholder: (context, url) => Shimmer(
       duration: const Duration(seconds: 2),
       color: Colors.white,

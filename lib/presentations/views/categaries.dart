@@ -52,13 +52,7 @@ Widget animeCatagories(String title, MyController controller, String q) {
           colors: [Color(0xFF8B5CF6), Color(0xFFD946EF)],
         ),
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF8B5CF6).withOpacity(0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        border: Border.all(color: Colors.white10, width: 1),
       ),
       child: Center(
         child: Text(

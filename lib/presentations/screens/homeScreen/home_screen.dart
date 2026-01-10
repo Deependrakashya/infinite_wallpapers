@@ -72,17 +72,18 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
                     const SizedBox(height: 10),
                     Obx(() {
-                      return controller.isLoading.value
+                      return controller.isLoading.value &&
+                              controller.allPhotos.isEmpty
                           ? Padding(
                               padding: const EdgeInsets.all(12),
                               child: GridView.builder(
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 12,
-                                      childAspectRatio: 0.6,
-                                      mainAxisSpacing: 12,
-                                    ),
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 12,
+                                  childAspectRatio: 0.6,
+                                  mainAxisSpacing: 12,
+                                ),
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: 6,
@@ -108,11 +109,11 @@ class _HomeScreenState extends State<HomeScreen>
                               child: GridView.builder(
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 12,
-                                      childAspectRatio: 0.6,
-                                      mainAxisSpacing: 12,
-                                    ),
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 12,
+                                  childAspectRatio: 0.6,
+                                  mainAxisSpacing: 12,
+                                ),
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: controller.allPhotos.length,
@@ -123,34 +124,37 @@ class _HomeScreenState extends State<HomeScreen>
                                       CupertinoPageRoute(
                                         builder: (context) => Setwallpaper(
                                           imgUrl: controller
-                                              .allPhotos[index]
-                                              .src!
-                                              .original
+                                              .allPhotos[index].src!.original
                                               .toString(),
                                           controller: controller,
                                         ),
                                       ),
                                     ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(
-                                              0.3,
+                                    child: RepaintBoundary(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(
+                                                0.3,
+                                              ),
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 4),
                                             ),
-                                            blurRadius: 10,
-                                            offset: const Offset(0, 4),
+                                          ],
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: image(
+                                            controller
+                                                .allPhotos[index].src!.large
+                                                .toString(),
+                                            index,
+                                            context,
                                           ),
-                                        ],
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: image(
-                                          controller.allPhotos[index].src!.large
-                                              .toString(),
-                                          index,
-                                          context,
                                         ),
                                       ),
                                     ),
@@ -162,6 +166,19 @@ class _HomeScreenState extends State<HomeScreen>
                   ],
                 ),
               ),
+              Obx(() {
+                return controller.isLoading.value &&
+                        controller.allPhotos.isNotEmpty
+                    ? SliverToBoxAdapter(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      )
+                    : const SliverToBoxAdapter(child: SizedBox(height: 10));
+              }),
             ],
           ),
         ],
