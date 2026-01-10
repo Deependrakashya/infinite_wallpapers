@@ -1,59 +1,89 @@
 import 'dart:developer';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
-import 'package:wallpaper/wallpaper.dart';
 import 'package:zen_walls/getx.dart';
+import 'package:zen_walls/services/wallpaper_service.dart';
 
-final MyController controller = Get.put(MyController());
+final MyController controller = Get.find<MyController>();
+
 Future<void> downloadAndSetWallpaper(
-    String imgUrl, MyController controller) async {
+  String imgUrl,
+  MyController controller,
+) async {
+  log('downloadAndSetWallpaper called for: $imgUrl');
   controller.downloading.value = true;
-  var progress = Wallpaper.imageDownloadProgress(imgUrl,
-      location: DownloadLocation.externalDirectory);
-  progress.listen((onData) {
-    controller.downloadedData.value = onData;
-    // print('data $onData');
-    if (controller.downloadedData.value.toString() == '100%') {
-      controller.downloadingDone.value = true;
-      controller.setWallpaperLoader.value = false;
+  controller.downloadedData.value = 'Connecting...';
+
+  try {
+    FileInfo? fileInfo = await DefaultCacheManager().getFileFromCache(imgUrl);
+    if (fileInfo == null) {
+      log('Image not in cache, downloading...');
+      controller.downloadedData.value = 'Downloading...';
+      fileInfo = await DefaultCacheManager().downloadFile(imgUrl);
+    } else {
+      log('Image found in cache.');
     }
-  }, onDone: () {
-    log('image saved Successfully');
 
+    if (fileInfo != null) {
+      log('File ready at: ${fileInfo.file.path}');
+      controller.downloadedData.value = '100%';
+      controller.downloadingDone.value = true;
+    } else {
+      log('File info is null after download Attempt.');
+      controller.downloadedData.value = 'Failed';
+    }
+  } catch (e) {
+    log('Download failed with exception: $e');
+    controller.downloadedData.value = 'Error';
+  } finally {
     controller.downloading.value = false;
-    controller.downloadingDone.value = true;
-  });
-}
-
-Future<void> setHomeScreen() async {
-  var data = await Wallpaper.homeScreen(
-      options: RequestSizeOptions.resizeExact,
-      location: DownloadLocation.externalDirectory);
-  if (data == 'Screen Set Successfully') {
-    controller.setWallpaperLoader.value = false;
   }
 }
 
-Future<void> setLockScreen() async {
-  // controller.setWallpaperLoader.value = false;
-  // print('lock screen pressed');
-
-  Wallpaper.homeScreen(
-    options: RequestSizeOptions.resizeFit,
-  );
-  // var data =
-  //     await Wallpaper.lockScreen(location: DownloadLocation.externalDirectory);
-  // if (data == 'Lock Screen Set Successfully') {
-  //   controller.setWallpaperLoader.value = false;
-  // }
-  // print(data);
+Future<void> setHomeScreen(String imgUrl) async {
+  log('UI Action: Set Home Screen for $imgUrl');
+  try {
+    bool success = await WallpaperService.setWallpaperFromUrl(
+      imgUrl,
+      WallpaperLocation.home,
+    );
+    log('Set Home Screen Success: $success');
+    if (success) {
+      controller.setWallpaperLoader.value = false;
+    }
+  } catch (e) {
+    log('Error in setHomeScreen handler: $e');
+  }
 }
 
-Future<void> setBothScreen() async {
-  // print('both screen pressed');
+Future<void> setLockScreen(String imgUrl) async {
+  log('UI Action: Set Lock Screen for $imgUrl');
+  try {
+    bool success = await WallpaperService.setWallpaperFromUrl(
+      imgUrl,
+      WallpaperLocation.lock,
+    );
+    log('Set Lock Screen Success: $success');
+    if (success) {
+      controller.setWallpaperLoader.value = false;
+    }
+  } catch (e) {
+    log('Error in setLockScreen handler: $e');
+  }
+}
 
-  var data =
-      await Wallpaper.bothScreen(location: DownloadLocation.externalDirectory);
-  if (data == 'Home and Lock Screen Set Successfully') {
-    controller.setWallpaperLoader.value = false;
+Future<void> setBothScreen(String imgUrl) async {
+  log('UI Action: Set Both Screens for $imgUrl');
+  try {
+    bool success = await WallpaperService.setWallpaperFromUrl(
+      imgUrl,
+      WallpaperLocation.both,
+    );
+    log('Set Both Screens Success: $success');
+    if (success) {
+      controller.setWallpaperLoader.value = false;
+    }
+  } catch (e) {
+    log('Error in setBothScreen handler: $e');
   }
 }

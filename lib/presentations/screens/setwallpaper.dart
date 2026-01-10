@@ -1,15 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zen_walls/getx.dart';
-
 import 'package:zen_walls/presentations/views/setwallpaper_views.dart';
 import 'package:zen_walls/services/setwallpaper_handler.dart';
 import 'package:get/get.dart';
 
 class Setwallpaper extends StatefulWidget {
   final String imgUrl;
-  MyController controller;
-  Setwallpaper({super.key, required this.imgUrl, required this.controller});
+  final MyController controller;
+  const Setwallpaper({
+    super.key,
+    required this.imgUrl,
+    required this.controller,
+  });
 
   @override
   State<Setwallpaper> createState() => _SetwallpaperState();
@@ -17,190 +20,257 @@ class Setwallpaper extends StatefulWidget {
 
 class _SetwallpaperState extends State<Setwallpaper> {
   bool setwallpaperbutton = true;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [Colors.yellow, Colors.black]),
-            ),
+          // Background Image
+          Positioned.fill(
             child: Image.network(
-              errorBuilder: (context, error, stackTrace) => const Center(
-                child: Text(
-                  textAlign: TextAlign.center,
-                  'Oops ! \n something went wrong !',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-              ),
-              height: double.infinity,
-              width: double.infinity,
               widget.imgUrl,
               fit: BoxFit.cover,
-            ),
-          ),
-          Positioned(
-              top: 40,
-              left: 10,
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(45)),
-                  gradient:
-                      LinearGradient(colors: [Colors.yellow, Colors.black]),
-                ),
-                child: MaterialButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      // controller.setWallpaperLoader.value = false;
-                    },
-                    child: const Icon(
-                      CupertinoIcons.back,
-                      color: Colors.white,
-                      size: 25,
-                    )),
-              )),
-          Obx(() {
-            return widget.controller.downloadingDone.value
-                ? Container()
-                : Positioned(
-                    width: MediaQuery.of(context).size.width * 1,
-                    bottom: 10,
-                    child: Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Colors.yellow, Colors.black],
-                          ),
-                          borderRadius: BorderRadius.circular(
-                              12), // Rounded corners for the gradient background
-                        ),
-                        child: MaterialButton(
-                          onPressed: () {
-                            downloadAndSetWallpaper(
-                                widget.imgUrl, widget.controller);
-                          },
-                          child: const Text(
-                            'set Wallpaper',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ));
-          }),
-          Obx(() {
-            return widget.controller.downloading.value
-                ? Center(
-                    child: Container(
-                      width: 300,
-                      height: 200,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        gradient: LinearGradient(
-                            colors: [Colors.yellow, Colors.black]),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Hold on Dude !! \n Saving Image',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 20),
-                            child: Text(
-                              widget.controller.downloadedData.value.toString(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          )
-                        ],
+              errorBuilder: (context, error, stackTrace) => Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      size: 60,
+                      color: theme.colorScheme.error,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Oops! Something went wrong',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        color: Colors.white,
                       ),
                     ),
-                  )
-                : const SizedBox();
-          }),
-          Obx(() {
-            print(
-                'wallpaper downling  done ${controller.downloadingDone.value}');
-            return widget.controller.downloadingDone.value
-                ? Positioned(
-                    bottom: 5,
-                    child: Container(
-                        margin: const EdgeInsets.all(20),
-                        padding: const EdgeInsets.all(10),
-                        width: MediaQuery.of(context).size.width * .9,
-                        decoration: BoxDecoration(
-                            color: const Color.fromRGBO(154, 153, 153, 0.494),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Obx(() {
-                          print(
-                              ' set wallpaper  ${controller.setWallpaperLoader.value}');
-
-                          return Center(
-                              child: setwallpaperbutton
-                                  ? Column(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            setHomeScreen();
-                                            setState(() {
-                                              setwallpaperbutton = false;
-                                            });
-                                          },
-                                          child: customButton(widget.controller,
-                                              'set as Home Screen'),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            setLockScreen();
-                                            setState(() {
-                                              setwallpaperbutton = false;
-                                            });
-                                          },
-                                          child: customButton(widget.controller,
-                                              'set as Lock Screen'),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            setBothScreen();
-                                            setState(() {
-                                              setwallpaperbutton = false;
-                                            });
-                                          },
-                                          child: customButton(widget.controller,
-                                              'set as Both Screen'),
-                                        ),
-                                      ],
-                                    )
-                                  : const Column(
-                                      children: [
-                                        Center(
-                                          child: Text(
-                                            'Hold on it may take few seconds',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        CircularProgressIndicator(
-                                          color: Colors.yellow,
-                                        ),
-                                      ],
-                                    ));
-                        })),
-                  )
-                : const SizedBox();
-          }),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Dark Overlay for better visibility of UI
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.3),
+                    Colors.transparent,
+                    Colors.black.withOpacity(0.6),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Back Button
+          Positioned(
+            top: 50,
+            left: 20,
+            child: ClipOval(
+              child: Material(
+                color: Colors.black26,
+                child: InkWell(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Icon(
+                      CupertinoIcons.back,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // Bottom Interaction Area
+          Positioned(
+            left: 20,
+            right: 20,
+            bottom: 40,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Obx(() {
+                  if (widget.controller.downloadingDone.value)
+                    return const SizedBox();
+                  return Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          theme.colorScheme.primary,
+                          theme.colorScheme.secondary,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: theme.colorScheme.primary.withOpacity(0.3),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: MaterialButton(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      onPressed: () => downloadAndSetWallpaper(
+                        widget.imgUrl,
+                        widget.controller,
+                      ),
+                      child: const Text(
+                        'SET WALLPAPER',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+                Obx(() {
+                  if (!widget.controller.downloading.value)
+                    return const SizedBox();
+                  return Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surface.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: theme.colorScheme.primary.withOpacity(0.2),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        const CircularProgressIndicator(),
+                        const SizedBox(height: 20),
+                        Text(
+                          'SAVING IMAGE...',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          widget.controller.downloadedData.value,
+                          style: theme.textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+                Obx(() {
+                  if (!widget.controller.downloadingDone.value)
+                    return const SizedBox();
+                  return Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surface.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: setwallpaperbutton
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const SizedBox(height: 8),
+                              _buildOptionButton(
+                                context,
+                                label: 'Home Screen',
+                                icon: Icons.home_outlined,
+                                onTap: () {
+                                  setHomeScreen(widget.imgUrl);
+                                  setState(() => setwallpaperbutton = false);
+                                },
+                              ),
+                              const SizedBox(height: 12),
+                              _buildOptionButton(
+                                context,
+                                label: 'Lock Screen',
+                                icon: Icons.lock_outline,
+                                onTap: () {
+                                  setLockScreen(widget.imgUrl);
+                                  setState(() => setwallpaperbutton = false);
+                                },
+                              ),
+                              const SizedBox(height: 12),
+                              _buildOptionButton(
+                                context,
+                                label: 'Both Screens',
+                                icon: Icons.phonelink_setup_outlined,
+                                onTap: () {
+                                  setBothScreen(widget.imgUrl);
+                                  setState(() => setwallpaperbutton = false);
+                                },
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              const Text(
+                                'Applying Wallpaper...',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              CircularProgressIndicator(
+                                color: theme.colorScheme.primary,
+                              ),
+                            ],
+                          ),
+                  );
+                }),
+              ],
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildOptionButton(
+    BuildContext context, {
+    required String label,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    final theme = Theme.of(context);
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+        decoration: BoxDecoration(
+          border: Border.all(color: theme.colorScheme.primary.withOpacity(0.3)),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: theme.colorScheme.primary),
+            const SizedBox(width: 16),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            const Spacer(),
+            const Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+              color: Colors.white54,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -10,14 +10,15 @@ import 'package:zen_walls/presentations/screens/splashScreen/splash_screen.dart'
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  // ... inside your main or a suitable initialization point
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent, // Transparent status bar
-    systemNavigationBarColor: Colors.transparent, // Transparent navigation bar
-    // Optionally, adjust icon colors for visibility
-    statusBarIconBrightness: Brightness.dark, // For light background
-    systemNavigationBarIconBrightness: Brightness.dark, // For light background
-  ));
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -29,13 +30,16 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: GoogleFonts.lobsterTextTheme(),
-        scaffoldBackgroundColor: Colors.black,
-        primaryTextTheme: TextTheme(
-            displayMedium: TextStyle(
-          color: Colors.white,
-        )),
-        colorSchemeSeed: const Color.fromARGB(255, 83, 52, 99),
+        brightness: Brightness.dark,
+        textTheme: GoogleFonts.outfitTextTheme(ThemeData.dark().textTheme),
+        scaffoldBackgroundColor: const Color(0xFF0F0F15), // Deep Space Blue
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF8B5CF6), // Vibrant Purple
+          brightness: Brightness.dark,
+          primary: const Color(0xFF8B5CF6),
+          secondary: const Color(0xFFD946EF), // Pinkish Magenta
+          surface: const Color(0xFF1E1E26),
+        ),
         useMaterial3: true,
       ),
       home: const SplashScreen(),
