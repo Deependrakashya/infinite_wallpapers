@@ -19,11 +19,7 @@ Infinite Wallpapers is a sleek and user-friendly wallpaper app built with **Flut
 - **Flutter**: For a beautiful, responsive UI and seamless cross-platform performance.
 - **REST APIs**: Fetch high-quality wallpapers from reliable sources on the internet.
 
-### Future Plans
-- **User Favorites**: Save your favorite wallpapers for quick access.
-- **Daily Updates**: New wallpapers in different categories daily.
-- **Personalized Recommendations**: Get wallpaper suggestions based on your preferences.
 - ## 📲 Download the APK
-     [Download Infinite Wallpapers APK](https://github.com/Deependrakashya/infinite_wallpapers/releases/download/Release/infiniteWallpapers.apk)  
+     [Download Infinite Wallpapers APK](https://github.com/Deependrakashya/infinite_wallpapers/releases/download/Release/app-release.apk)  
 
 **Infinite Wallpapers**—Your one-stop destination for endless wallpaper possibilities!
