@@ -1,23 +1,23 @@
 // ignore_for_file: unnecessary_new, prefer_collection_literals
 
 class Wallhaven {
-  List<Data>? data;
+  List<WallhavenData>? data;
   Meta? meta;
 
   Wallhaven({this.data, this.meta});
 
   Wallhaven.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <WallhavenData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(WallhavenData.fromJson(v));
       });
     }
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -28,7 +28,7 @@ class Wallhaven {
   }
 }
 
-class Data {
+class WallhavenData {
   String? id;
   String? url;
   String? shortUrl;
@@ -48,27 +48,28 @@ class Data {
   String? path;
   Thumbs? thumbs;
 
-  Data(
-      {this.id,
-      this.url,
-      this.shortUrl,
-      this.views,
-      this.favorites,
-      this.source,
-      this.purity,
-      this.category,
-      this.dimensionX,
-      this.dimensionY,
-      this.resolution,
-      this.ratio,
-      this.fileSize,
-      this.fileType,
-      this.createdAt,
-      this.colors,
-      this.path,
-      this.thumbs});
+  WallhavenData({
+    this.id,
+    this.url,
+    this.shortUrl,
+    this.views,
+    this.favorites,
+    this.source,
+    this.purity,
+    this.category,
+    this.dimensionX,
+    this.dimensionY,
+    this.resolution,
+    this.ratio,
+    this.fileSize,
+    this.fileType,
+    this.createdAt,
+    this.colors,
+    this.path,
+    this.thumbs,
+  });
 
-  Data.fromJson(Map<String, dynamic> json) {
+  WallhavenData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     url = json['url'];
     shortUrl = json['short_url'];
@@ -84,14 +85,13 @@ class Data {
     fileSize = json['file_size'];
     fileType = json['file_type'];
     createdAt = json['created_at'];
-    colors = json['colors'].cast<String>();
+    colors = json['colors']?.cast<String>();
     path = json['path'];
-    thumbs =
-        json['thumbs'] != null ? new Thumbs.fromJson(json['thumbs']) : null;
+    thumbs = json['thumbs'] != null ? Thumbs.fromJson(json['thumbs']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['url'] = url;
     data['short_url'] = shortUrl;
@@ -130,7 +130,7 @@ class Thumbs {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['large'] = large;
     data['original'] = original;
     data['small'] = small;
@@ -141,7 +141,7 @@ class Thumbs {
 class Meta {
   int? currentPage;
   int? lastPage;
-  int? perPage; // Change this to int to match the API response
+  int? perPage;
   int? total;
   String? query;
   String? seed;
@@ -157,7 +157,7 @@ class Meta {
 
   Meta.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'] is String
-        ? int.tryParse(json['current_page']) // Parse if it's a string
+        ? int.tryParse(json['current_page'])
         : json['current_page'] as int?;
 
     lastPage = json['last_page'] is String
@@ -177,7 +177,7 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['current_page'] = currentPage;
     data['last_page'] = lastPage;
     data['per_page'] = perPage;

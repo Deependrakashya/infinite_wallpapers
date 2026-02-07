@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:zen_walls/viewmodel/getx.dart';
+import 'package:zen_walls/viewmodels/home_view_model.dart';
+import 'package:zen_walls/viewmodels/anime_view_model.dart';
 
-Widget categories(String title, String imgUrl, MyController controller) {
+Widget pexelsCategory(String title, String imgUrl, HomeViewModel viewModel) {
   return InkWell(
     onTap: () {
-      controller.searchPexelsImages(title);
+      viewModel.searchPhotos(title);
     },
     child: Container(
       height: 50,
@@ -38,10 +39,10 @@ Widget categories(String title, String imgUrl, MyController controller) {
   );
 }
 
-Widget animeCatagories(String title, MyController controller, String q) {
+Widget animeCategory(String title, AnimeViewModel viewModel, String q) {
   return InkWell(
     onTap: () {
-      controller.searchAnimePhotos(q);
+      viewModel.searchAnime(q);
     },
     child: Container(
       height: 50,

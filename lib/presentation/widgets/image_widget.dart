@@ -1,16 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:zen_walls/viewmodel/getx.dart';
+import 'package:zen_walls/viewmodels/home_view_model.dart';
+import 'package:zen_walls/viewmodels/anime_view_model.dart';
 
-SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
-  TextEditingController textEditingController =
-      controller.textEditingController;
+SliverAppBar homeSliverAppBar(BuildContext context, HomeViewModel viewModel) {
   return SliverAppBar(
     title: const Text(
-      'infinite wallpapers',
-      style: TextStyle(color: Colors.white),
+      'Infinite Wallpapers',
+      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
     ),
     floating: true,
     snap: true,
@@ -18,73 +17,66 @@ SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     actions: [
       Obx(
-        () => controller.getTouch.value
+        () => viewModel.isSearching.value
             ? Center(
                 child: Container(
                   margin: const EdgeInsets.all(5),
                   padding: const EdgeInsets.all(5),
                   width: MediaQuery.of(context).size.width * .95,
                   child: TextField(
-                    controller: textEditingController,
-                    onSubmitted: (value) => controller.searchPexelsImages(
-                      textEditingController.text,
-                    ),
+                    onSubmitted: (value) => viewModel.searchPhotos(value),
                     style: const TextStyle(fontSize: 14, color: Colors.white),
-                    cursorColor: Colors.yellow,
+                    cursorColor: Colors.purpleAccent,
                     cursorRadius: const Radius.circular(10),
                     cursorWidth: 1,
                     cursorHeight: 14,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 20),
-                      hintText: 'Search Here?',
-                      hintStyle: const TextStyle(color: Colors.white),
+                      hintText: 'Search Wallpapers...',
+                      hintStyle: const TextStyle(color: Colors.white54),
                       suffixIcon: IconButton(
                         padding: const EdgeInsets.all(5),
-                        onPressed: () {
-                          controller.toggleSearchBar();
-                        },
+                        onPressed: () => viewModel.resetSearch(),
                         icon: const Icon(
                           Icons.cancel,
                           color: Colors.white,
                           size: 20,
                         ),
                       ),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        borderSide:
+                            BorderSide(color: Colors.white.withOpacity(0.3)),
                       ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        borderSide:
+                            BorderSide(color: Colors.white.withOpacity(0.3)),
                       ),
                       focusedBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.purpleAccent),
                       ),
                     ),
                   ),
                 ),
               )
-            : Container(
-                child: IconButton(
-                  onPressed: () {
-                    controller.toggleSearchBar();
-                  },
-                  icon: const Icon(Icons.search, color: Colors.white),
-                ),
+            : IconButton(
+                onPressed: () => viewModel.isSearching.value = true,
+                icon: const Icon(Icons.search, color: Colors.white),
               ),
       ),
     ],
   );
 }
 
-SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
-  TextEditingController textEditingController =
-      controller.textEditingController;
+SliverAppBar animeSliverAppBar(BuildContext context, AnimeViewModel viewModel) {
   return SliverAppBar(
     title: const Text(
-      'anime wallpapers',
-      style: TextStyle(color: Colors.white),
+      'Anime Wallpapers',
+      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
     ),
     floating: true,
     snap: true,
@@ -92,60 +84,56 @@ SliverAppBar AnimeSliverAppBar(BuildContext context, MyController controller) {
     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     actions: [
       Obx(
-        () => controller.getTouch.value
+        () => viewModel.isSearchOpen.value
             ? Center(
                 child: Container(
                   margin: const EdgeInsets.all(5),
                   padding: const EdgeInsets.all(5),
                   width: MediaQuery.of(context).size.width * .95,
                   child: TextField(
-                    controller: textEditingController,
-                    onSubmitted: (value) => controller.searchAnimePhotos(
-                      textEditingController.text,
-                    ),
+                    controller: viewModel.searchController,
+                    onSubmitted: (value) => viewModel.searchAnime(value),
                     style: const TextStyle(fontSize: 14, color: Colors.white),
-                    cursorColor: Colors.white,
+                    cursorColor: Colors.purpleAccent,
                     cursorRadius: const Radius.circular(10),
                     cursorWidth: 1,
                     cursorHeight: 14,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 20),
-                      hintText: 'Search Here?',
-                      hintStyle: const TextStyle(color: Colors.white),
+                      hintText: 'Search Anime...',
+                      hintStyle: const TextStyle(color: Colors.white54),
                       suffixIcon: IconButton(
                         padding: const EdgeInsets.all(5),
-                        onPressed: () {
-                          controller.toggleSearchBar();
-                        },
+                        onPressed: () => viewModel.toggleSearch(),
                         icon: const Icon(
                           Icons.cancel,
                           color: Colors.white,
                           size: 20,
                         ),
                       ),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        borderSide:
+                            BorderSide(color: Colors.white.withOpacity(0.3)),
                       ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        borderSide:
+                            BorderSide(color: Colors.white.withOpacity(0.3)),
                       ),
                       focusedBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.purpleAccent),
                       ),
                     ),
                   ),
                 ),
               )
-            : Container(
-                child: IconButton(
-                  onPressed: () {
-                    controller.toggleSearchBar();
-                  },
-                  icon: const Icon(Icons.search, color: Colors.white),
-                ),
+            : IconButton(
+                onPressed: () => viewModel.toggleSearch(),
+                icon: const Icon(Icons.search, color: Colors.white),
               ),
       ),
     ],

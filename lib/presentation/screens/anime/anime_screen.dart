@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:zen_walls/services/const.dart';
-import 'package:zen_walls/viewmodel/getx.dart';
-
-import 'package:zen_walls/presentations/screens/setwallpaper.dart';
-import 'package:zen_walls/presentations/views/categaries.dart';
-
-import 'package:zen_walls/presentations/views/image.dart';
+import 'package:zen_walls/viewmodels/anime_view_model.dart';
+import 'package:zen_walls/presentation/screens/set_wallpaper_screen.dart';
+import 'package:zen_walls/presentation/widgets/categories.dart';
+import 'package:zen_walls/presentation/widgets/image_widget.dart';
 
 class AnimeScreen extends StatefulWidget {
   const AnimeScreen({super.key});
@@ -19,30 +17,13 @@ class AnimeScreen extends StatefulWidget {
 
 class _AnimeScreenState extends State<AnimeScreen>
     with AutomaticKeepAliveClientMixin {
-  final MyController controller = Get.find<MyController>();
+  final AnimeViewModel animeViewModel = Get.put(AnimeViewModel());
   var categorieslist = StaticImagesCategories().animeCatagories;
+
   @override
   void initState() {
     super.initState();
-    controller.checkInternet();
-    controller.animescrollerController
-        .addListener(controller.animeloadMorePhotos);
-    controller.animescrollerController.addListener(() {
-      controller.updateScrollDirection(
-          controller.animescrollerController.position.userScrollDirection);
-    });
-    if (controller.animePhotos.isEmpty) {
-      controller.animefetchInitialPhotos();
-    }
-    controller.setWallpaperLoader.value = false;
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  bool searchTap = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -54,12 +35,9 @@ class _AnimeScreenState extends State<AnimeScreen>
       body: Stack(
         children: [
           CustomScrollView(
-            controller: controller.animescrollerController,
+            controller: animeViewModel.scrollController,
             slivers: [
-              AnimeSliverAppBar(
-                context,
-                controller,
-              ),
+              animeSliverAppBar(context, animeViewModel),
               SliverAppBar(
                 pinned: false,
                 floating: true,
@@ -79,9 +57,9 @@ class _AnimeScreenState extends State<AnimeScreen>
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         itemCount: categorieslist.length,
                         itemBuilder: (context, index) {
-                          return animeCatagories(
+                          return animeCategory(
                             categorieslist[index]['title'].toString(),
-                            controller,
+                            animeViewModel,
                             categorieslist[index]['q'].toString(),
                           );
                         }),
@@ -91,8 +69,8 @@ class _AnimeScreenState extends State<AnimeScreen>
               SliverToBoxAdapter(
                 child: Obx(() {
                   final theme = Theme.of(context);
-                  return controller.animePageisLoading.value &&
-                          controller.animePhotos.isEmpty
+                  return animeViewModel.isLoading.value &&
+                          animeViewModel.animePhotos.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.all(12),
                           child: GridView.builder(
@@ -135,16 +113,15 @@ class _AnimeScreenState extends State<AnimeScreen>
                             ),
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.animePhotos.length,
+                            itemCount: animeViewModel.animePhotos.length,
                             itemBuilder: (context, index) {
-                              var wallpaper = controller.animePhotos[index];
+                              var wallpaper = animeViewModel.animePhotos[index];
                               return InkWell(
                                 onTap: () => Navigator.push(
                                   context,
                                   CupertinoPageRoute(
                                     builder: (context) => Setwallpaper(
                                       imgUrl: wallpaper.path.toString(),
-                                      controller: controller,
                                     ),
                                   ),
                                 ),
@@ -164,7 +141,8 @@ class _AnimeScreenState extends State<AnimeScreen>
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
                                     child: image(
-                                      wallpaper.thumbs.original.toString(),
+                                      wallpaper.thumbs?.original.toString() ??
+                                          '',
                                       index,
                                       context,
                                     ),
@@ -177,8 +155,8 @@ class _AnimeScreenState extends State<AnimeScreen>
                 }),
               ),
               Obx(() {
-                return controller.animePageisLoading.value &&
-                        controller.animePhotos.isNotEmpty
+                return animeViewModel.isLoading.value &&
+                        animeViewModel.animePhotos.isNotEmpty
                     ? SliverToBoxAdapter(
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -191,49 +169,6 @@ class _AnimeScreenState extends State<AnimeScreen>
               }),
             ],
           ),
-          // Obx(() {
-          //   return controller.disconnected.value
-          //       ? Container(
-          //           color: const Color.fromARGB(255, 30, 29, 29)
-          //               .withOpacity(0.7),
-          //           height: MediaQuery.of(context).size.height * 1,
-          //           width: MediaQuery.of(context).size.width * 1,
-          //           child: Center(
-          //             child: Container(
-          //               height: 200,
-          //               width: 200,
-          //               decoration: BoxDecoration(
-          //                   color: Colors.red,
-          //                   borderRadius: BorderRadius.circular(20)),
-          //               child: Column(
-          //                 children: [
-          //                   Container(
-          //                     margin: EdgeInsets.only(top: 20),
-          //                     child: Center(
-          //                       child: Text(
-          //                         "Please turn on \n internet",
-          //                         textAlign: TextAlign.center,
-          //                         style: TextStyle(
-          //                             color: Colors.white, fontSize: 20),
-          //                       ),
-          //                     ),
-          //                   ),
-          //                   SizedBox(
-          //                     height: 20,
-          //                   ),
-          //                   CircularProgressIndicator(
-          //                     color: Colors.yellow,
-          //                   )
-          //                 ],
-          //               ),
-          //             ),
-          //           ),
-          //         )
-          //       : Container(
-          //           width: 0,
-          //           height: 0,
-          //         );
-          // })
         ],
       ),
     );

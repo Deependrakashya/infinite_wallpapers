@@ -1,18 +1,12 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:zen_walls/services/const.dart';
-import 'package:zen_walls/viewmodel/getx.dart';
-import 'package:zen_walls/presentations/screens/setwallpaper.dart';
-
-import 'package:zen_walls/presentations/views/categaries.dart';
-
-import 'package:zen_walls/presentations/views/image.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:zen_walls/viewmodels/home_view_model.dart';
+import 'package:zen_walls/presentation/screens/set_wallpaper_screen.dart';
+import 'package:zen_walls/presentation/widgets/categories.dart';
+import 'package:zen_walls/presentation/widgets/image_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,20 +17,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
-  final MyController controller = Get.find<MyController>();
+  final HomeViewModel homeViewModel = Get.find<HomeViewModel>();
 
   @override
   void initState() {
     super.initState();
-    controller.checkInternet();
-    controller.scrollController.addListener(controller.loadMorePhotos);
-    controller.scrollController.addListener(() {
-      controller.updateScrollDirection(
-          controller.scrollController.position.userScrollDirection);
-    });
-    if (controller.allPhotos.isEmpty) {
-      controller.fetchInitialPhotos(); // Fetch initial photos
-    }
   }
 
   @override
@@ -51,9 +36,9 @@ class _HomeScreenState extends State<HomeScreen>
       body: Stack(
         children: [
           CustomScrollView(
-            controller: controller.scrollController,
+            controller: homeViewModel.scrollController,
             slivers: [
-              MySliverAppBar(context, controller),
+              homeSliverAppBar(context, homeViewModel),
               SliverAppBar(
                 pinned: false,
                 floating: true,
@@ -73,10 +58,10 @@ class _HomeScreenState extends State<HomeScreen>
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       itemCount: categorieslist.length,
                       itemBuilder: (context, index) {
-                        return categories(
+                        return pexelsCategory(
                           categorieslist[index]['title'].toString(),
                           categorieslist[index]['imgUrl'].toString(),
-                          controller,
+                          homeViewModel,
                         );
                       },
                     ),
@@ -86,8 +71,8 @@ class _HomeScreenState extends State<HomeScreen>
               SliverToBoxAdapter(
                 child: Obx(() {
                   final theme = Theme.of(context);
-                  return controller.isLoading.value &&
-                          controller.allPhotos.isEmpty
+                  return homeViewModel.isLoading.value &&
+                          homeViewModel.allPhotos.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.all(12),
                           child: GridView.builder(
@@ -130,17 +115,16 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.allPhotos.length,
+                            itemCount: homeViewModel.allPhotos.length,
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () => Navigator.push(
                                   context,
                                   CupertinoPageRoute(
                                     builder: (context) => Setwallpaper(
-                                      imgUrl: controller
+                                      imgUrl: homeViewModel
                                           .allPhotos[index].src!.large2x
                                           .toString(),
-                                      controller: controller,
                                     ),
                                   ),
                                 ),
@@ -161,7 +145,8 @@ class _HomeScreenState extends State<HomeScreen>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
                                       child: image(
-                                        controller.allPhotos[index].src!.large
+                                        homeViewModel
+                                            .allPhotos[index].src!.large
                                             .toString(),
                                         index,
                                         context,
@@ -176,8 +161,8 @@ class _HomeScreenState extends State<HomeScreen>
                 }),
               ),
               Obx(() {
-                return controller.isLoading.value &&
-                        controller.allPhotos.isNotEmpty
+                return homeViewModel.isLoading.value &&
+                        homeViewModel.allPhotos.isNotEmpty
                     ? SliverToBoxAdapter(
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 20),

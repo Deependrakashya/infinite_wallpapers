@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:zen_walls/presentations/screens/tabBar/bottom_navigation.dart';
+import 'package:zen_walls/presentation/screens/tab_bar/bottom_navigation.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

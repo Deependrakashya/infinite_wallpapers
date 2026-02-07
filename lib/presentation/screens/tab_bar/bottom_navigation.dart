@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:zen_walls/viewmodel/getx.dart';
-import 'package:zen_walls/presentations/screens/anime/anime.dart';
-import 'package:zen_walls/presentations/screens/homeScreen/home_screen.dart';
+import 'package:zen_walls/viewmodels/home_view_model.dart';
+import 'package:zen_walls/presentation/screens/anime/anime_screen.dart';
+import 'package:zen_walls/presentation/screens/home_screen/home_screen.dart';
 
 class BottomNaviagtion extends StatefulWidget {
   const BottomNaviagtion({super.key});
@@ -18,7 +18,6 @@ class _HomePageState extends State<BottomNaviagtion> {
   void setIndex(index) {
     setState(() {
       selectedIndex = index;
-      print(selectedIndex);
     });
   }
 
@@ -29,7 +28,7 @@ class _HomePageState extends State<BottomNaviagtion> {
 
   @override
   Widget build(BuildContext context) {
-    final MyController controller = Get.put(MyController(), permanent: true);
+    final HomeViewModel homeViewModel = Get.put(HomeViewModel());
     return Scaffold(
       body: IndexedStack(
         index: selectedIndex,
@@ -40,7 +39,7 @@ class _HomePageState extends State<BottomNaviagtion> {
         return SafeArea(
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            height: controller.isBarsVisible.value ? 40 : 0,
+            height: homeViewModel.isBarsVisible.value ? 40 : 0,
             child: Wrap(
               children: [
                 Container(

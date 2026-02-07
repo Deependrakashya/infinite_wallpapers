@@ -1,54 +1,17 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 import 'dart:developer' as dev;
 
-enum WallpaperLocation { home, lock, both }
-
 class WallpaperService {
-  static const MethodChannel _channel = MethodChannel('com.vaky.aio/wallpaper');
+  static const MethodChannel _channel =
+      MethodChannel('com.devquorix.zenwalls/wallpaper');
 
-  /// Sets the wallpaper from a local file path.
-  /// [path] Absolute path to the image file.
-  /// [location] Where to set the wallpaper (home, lock, or both).
-  static Future<bool> setWallpaper(
-      String path, WallpaperLocation location) async {
-    dev.log('setWallpaper triggered for path: $path, location: $location',
-        name: 'WallpaperService');
-    try {
-      final int locationInt;
-      switch (location) {
-        case WallpaperLocation.home:
-          locationInt = 1;
-          break;
-        case WallpaperLocation.lock:
-          locationInt = 2;
-          break;
-        case WallpaperLocation.both:
-          locationInt = 3;
-          break;
-      }
-
-      dev.log('Invoking MethodChannel with locationInt: $locationInt',
-          name: 'WallpaperService');
-      final bool? result = await _channel.invokeMethod('setWallpaper', {
-        'path': path,
-        'location': locationInt,
-      });
-      dev.log('MethodChannel result: $result', name: 'WallpaperService');
-      return result ?? false;
-    } on PlatformException catch (e) {
-      dev.log('PlatformException: ${e.message}',
-          name: 'WallpaperService', error: e);
-      return false;
-    } catch (e) {
-      dev.log('Unexpected error: $e', name: 'WallpaperService', error: e);
-      return false;
-    }
-  }
-
-  /// Downloads an image from [url] using [DefaultCacheManager] and sets it as wallpaper.
-  static Future<bool> setWallpaperFromUrl(
-      String url, WallpaperLocation location) async {
+  /// Launches the native filtered system "Set as" chooser for the image at [url].
+  /// This downloads the image, saves it to a temporary directory, and then
+  /// invokes the native method to show the chooser.
+  static Future<bool> setWallpaperFromUrl(String url) async {
     dev.log('setWallpaperFromUrl triggered for url: $url',
         name: 'WallpaperService');
     try {
@@ -56,7 +19,26 @@ class WallpaperService {
       final file = await DefaultCacheManager().getSingleFile(url);
       dev.log('Download complete. File path: ${file.path}',
           name: 'WallpaperService');
-      return await setWallpaper(file.path, location);
+
+      // Create a temporary file in a location shareable by FileProvider
+      final tempDir = await getTemporaryDirectory();
+      final fileName = url.split('/').last.split('?').first;
+      final tempFile = File('${tempDir.path}/$fileName');
+
+      // Copy the cached file to the temp location
+      await file.copy(tempFile.path);
+      dev.log('File copied to temp location: ${tempFile.path}',
+          name: 'WallpaperService');
+
+      final contentUri =
+          'content://com.devquorix.zenwalls.fileprovider/my_cache/$fileName';
+
+      dev.log('Invoking native showWallpaperChooser with URI: $contentUri',
+          name: 'WallpaperService');
+
+      await _channel.invokeMethod('showWallpaperChooser', {'uri': contentUri});
+
+      return true;
     } catch (e) {
       dev.log('Error in setWallpaperFromUrl: $e',
           name: 'WallpaperService', error: e);

@@ -1,4 +1,4 @@
-class ClusturedPhotos {
+class ClusteredPhotos {
   int? page;
   int? perPage;
   List<Photos>? photos;
@@ -6,15 +6,16 @@ class ClusturedPhotos {
   String? nextPage;
   String? prevPage;
 
-  ClusturedPhotos(List data,
-      {this.page,
-      this.perPage,
-      this.photos,
-      this.totalResults,
-      this.nextPage,
-      this.prevPage});
+  ClusteredPhotos({
+    this.page,
+    this.perPage,
+    this.photos,
+    this.totalResults,
+    this.nextPage,
+    this.prevPage,
+  });
 
-  ClusturedPhotos.fromJson(Map<String, dynamic> json) {
+  ClusteredPhotos.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     perPage = json['per_page'];
     if (json['photos'] != null) {

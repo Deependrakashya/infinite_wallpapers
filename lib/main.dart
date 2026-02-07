@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:zen_walls/presentations/screens/splashScreen/splash_screen.dart';
+import 'package:zen_walls/presentation/screens/splash_screen/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
