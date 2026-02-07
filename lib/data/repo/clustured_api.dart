@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:zen_walls/model/clusturedImages/clusturedImages.dart';
+import 'package:zen_walls/data/model/clusturedImages/clusturedImages.dart';
 import 'package:http/http.dart' as https;
 
 // List<ClusturedPhotos> clusturedImages ;

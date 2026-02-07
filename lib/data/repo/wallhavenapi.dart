@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:zen_walls/model/wellhaven/wellhaven.dart';
+import 'package:zen_walls/data/model/wellhaven/wellhaven.dart';
 import 'package:http/http.dart' as https;
 
 Future<Wallhaven> WallheavenApiCall(

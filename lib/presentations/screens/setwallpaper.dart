@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zen_walls/getx.dart';
+import 'package:zen_walls/viewmodel/getx.dart';
 import 'package:zen_walls/presentations/views/setwallpaper_views.dart';
 import 'package:zen_walls/services/setwallpaper_handler.dart';
 import 'package:get/get.dart';

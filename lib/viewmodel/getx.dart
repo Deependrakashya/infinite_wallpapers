@@ -4,9 +4,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:zen_walls/viewmodel/ApiCall/clustured_api.dart';
-import 'package:zen_walls/viewmodel/ApiCall/wallhavenapi.dart';
-import 'package:zen_walls/model/clusturedImages/clusturedImages.dart';
+import 'package:zen_walls/data/repo/clustured_api.dart';
+import 'package:zen_walls/data/repo/wallhavenapi.dart';
+import 'package:zen_walls/data/model/clusturedImages/clusturedImages.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class MyController extends GetxController {

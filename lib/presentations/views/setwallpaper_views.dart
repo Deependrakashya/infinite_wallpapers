@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zen_walls/getx.dart';
+import 'package:zen_walls/viewmodel/getx.dart';
 
 Widget customButton(MyController controller, String title) {
   return Container(

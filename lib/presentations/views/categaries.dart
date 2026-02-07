@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zen_walls/getx.dart';
+import 'package:zen_walls/viewmodel/getx.dart';
 
 Widget categories(String title, String imgUrl, MyController controller) {
   return InkWell(

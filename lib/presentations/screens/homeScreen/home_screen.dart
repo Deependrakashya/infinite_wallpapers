@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:zen_walls/services/const.dart';
-import 'package:zen_walls/getx.dart';
+import 'package:zen_walls/viewmodel/getx.dart';
 import 'package:zen_walls/presentations/screens/setwallpaper.dart';
 
 import 'package:zen_walls/presentations/views/categaries.dart';

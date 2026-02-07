@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
-import 'package:zen_walls/getx.dart';
+import 'package:zen_walls/viewmodel/getx.dart';
 import 'package:zen_walls/services/wallpaper_service.dart';
 
 final MyController controller = Get.find<MyController>();

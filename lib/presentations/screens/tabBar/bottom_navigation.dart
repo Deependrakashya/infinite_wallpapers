@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:zen_walls/getx.dart';
+import 'package:zen_walls/viewmodel/getx.dart';
 import 'package:zen_walls/presentations/screens/anime/anime.dart';
 import 'package:zen_walls/presentations/screens/homeScreen/home_screen.dart';
 

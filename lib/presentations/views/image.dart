@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:zen_walls/getx.dart';
+import 'package:zen_walls/viewmodel/getx.dart';
 
 SliverAppBar MySliverAppBar(BuildContext context, MyController controller) {
   TextEditingController textEditingController =
